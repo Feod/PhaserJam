@@ -559,26 +559,6 @@ var games = [
     demos: []
   },
   {
-    id: 7,
-    name: 'boom-dots',
-    title: 'Boom Dots',
-    description: '',
-    phaserVersion: '2.4.4',
-    isPlayable: true,
-    screenshots: [
-      'boom-dots.jpg'
-    ],
-    references: [
-      'http://www.emanueleferonato.com/2015/04/16/create-an-html5-game-like-boom-dots-in-less-than-100-lines-of-code-with-phaser/',
-      'http://www.emanueleferonato.com/tag/boom-dots/'
-    ],
-    tags: [],
-    inspirations: [
-      'https://itunes.apple.com/us/app/boom-dots/id975047985'
-    ],
-    demos: []
-  },
-  {
     id: 12,
     name: 'bresenham-light',
     title: 'Bresenham Light',

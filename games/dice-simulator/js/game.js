@@ -13,7 +13,8 @@ const config = {
 
 const game = new Phaser.Game(config);
 
-let dice;
+let diceBase;
+let diceOverlay;
 let rollButton;
 
 function preload() {
@@ -23,13 +24,18 @@ function preload() {
   this.load.image('dice4', 'assets/dice4.png');
   this.load.image('dice5', 'assets/dice5.png');
   this.load.image('dice6', 'assets/dice6.png');
+  this.load.image('dice_base_128', 'assets/dice_base_128.png'); // Load the dice base image
   this.load.image('rollButton', 'assets/rollButton.png'); // Ensure you have this asset
 }
 
 function create() {
-  // Add the dice sprite
-  dice = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'dice1');
-  dice.setOrigin(0.5);
+  // Add the dice base sprite
+  diceBase = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'dice_base_128');
+  diceBase.setOrigin(0.5);
+
+  // Add the dice overlay sprite
+  diceOverlay = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'dice1');
+  diceOverlay.setOrigin(0.5);
 
   // Add the roll button
   rollButton = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 200, 'rollButton')
@@ -49,7 +55,7 @@ function rollDice() {
 
   // Add tween to animate dice roll
   this.tweens.add({
-    targets: dice,
+    targets: diceOverlay,
     rotation: { from: 0, to: 2 * Math.PI },
     scaleX: { from: 1, to: 1.5, yoyo: true },
     scaleY: { from: 1, to: 1.5, yoyo: true },
@@ -57,10 +63,10 @@ function rollDice() {
     ease: 'Power2',
     onUpdate: () => {
       const randomFrame = Phaser.Math.Between(1, 6);
-      dice.setTexture('dice' + randomFrame); // Change the dice texture continuously
+      diceOverlay.setTexture('dice' + randomFrame); // Change the dice texture continuously
     },
     onComplete: () => {
-      dice.setTexture('dice' + diceRoll); // Set the final dice texture
+      diceOverlay.setTexture('dice' + diceRoll); // Set the final dice texture
     }
   });
 }

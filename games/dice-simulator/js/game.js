@@ -1,13 +1,17 @@
 const config = {
   type: Phaser.AUTO,
-  width: window.innerWidth,
-  height: window.innerHeight,
+  width: 800,
+  height: 600,
   backgroundColor: '#182d3b',
   parent: 'game',
   scene: {
     preload: preload,
     create: create,
     update: update
+  },
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
   }
 };
 

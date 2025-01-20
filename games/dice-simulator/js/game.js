@@ -53,10 +53,14 @@ function rollDice() {
     rotation: { from: 0, to: 2 * Math.PI },
     scaleX: { from: 1, to: 1.5, yoyo: true },
     scaleY: { from: 1, to: 1.5, yoyo: true },
-    duration: 500,
+    duration: 300, // Make tween faster
     ease: 'Power2',
+    onUpdate: () => {
+      const randomFrame = Phaser.Math.Between(1, 6);
+      dice.setTexture('dice' + randomFrame); // Change the dice texture continuously
+    },
     onComplete: () => {
-      dice.setTexture('dice' + diceRoll); // Change the dice texture
+      dice.setTexture('dice' + diceRoll); // Set the final dice texture
     }
   });
 }

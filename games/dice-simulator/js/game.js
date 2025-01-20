@@ -55,7 +55,7 @@ function rollDice() {
 
   // Add tween to animate dice roll
   this.tweens.add({
-    targets: diceOverlay,
+    targets: [diceBase, diceOverlay],
     rotation: { from: 0, to: 2 * Math.PI },
     scaleX: { from: 1, to: 1.5, yoyo: true },
     scaleY: { from: 1, to: 1.5, yoyo: true },

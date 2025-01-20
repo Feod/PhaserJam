@@ -1,7 +1,7 @@
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: window.innerWidth,
+  height: window.innerWidth,
   backgroundColor: '#182d3b',
   parent: 'game',
   scene: {

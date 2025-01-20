@@ -1062,6 +1062,21 @@ var games = [
     inspirations: [],
     demos: []
   },
+  {
+    id: 122,
+    name: 'dice-simulator',
+    title: 'Dice Simulator',
+    description: 'A simple dice rolling simulator',
+    phaserVersion: '2.4.4',
+    isPlayable: true,
+    screenshots: [
+      'dice-simulator.jpg'
+    ],
+    references: [],
+    tags: [],
+    inspirations: [],
+    demos: []
+  },
 ];
 
 function debugGameObject() {

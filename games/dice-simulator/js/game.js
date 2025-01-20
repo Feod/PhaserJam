@@ -20,6 +20,8 @@ const game = new Phaser.Game(config);
 let diceBase;
 let diceOverlay;
 let rollButton;
+let cumulativeScore = 0; // P66d5
+let scoreText; // P5326
 
 function preload() {
   this.load.image('dice1', 'assets/dice1.png');
@@ -42,12 +44,15 @@ function create() {
   diceOverlay.setOrigin(0.5);
 
   // Add the roll button
-  rollButton = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 200, 'rollButton')
+  rollButton = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 100, 'rollButton') // P0e42
     .setInteractive()
     .setOrigin(0.5);
 
   // Add input listener for the roll button
   rollButton.on('pointerdown', rollDice, this);
+
+  // Add the score text
+  scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' }); // P5326
 }
 
 function update() {
@@ -71,6 +76,8 @@ function rollDice() {
     },
     onComplete: () => {
       diceOverlay.setTexture('dice' + diceRoll); // Set the final dice texture
+      cumulativeScore += diceRoll; // P0970
+      scoreText.setText('Score: ' + cumulativeScore); // P5326
     }
   });
 }

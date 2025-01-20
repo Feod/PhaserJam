@@ -46,5 +46,17 @@ function update() {
 
 function rollDice() {
   const diceRoll = Phaser.Math.Between(1, 6); // Generate a random number between 1 and 6
-  dice.setTexture('dice' + diceRoll); // Change the dice texture
+
+  // Add tween to animate dice roll
+  this.tweens.add({
+    targets: dice,
+    rotation: { from: 0, to: 2 * Math.PI },
+    scaleX: { from: 1, to: 1.5, yoyo: true },
+    scaleY: { from: 1, to: 1.5, yoyo: true },
+    duration: 500,
+    ease: 'Power2',
+    onComplete: () => {
+      dice.setTexture('dice' + diceRoll); // Change the dice texture
+    }
+  });
 }

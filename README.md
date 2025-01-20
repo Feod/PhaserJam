@@ -2,6 +2,8 @@
 
 🎮 This repo is extend on repo ( <https://github.com/jojoee/phaser-examples> ) by jojoee, and https://github.com/noowxela/phaser-examples/
 
+For testing and preparing my own Phaser projects...
+
 A collection of games made by phaser, [DEMO](https://noowxela.github.io/phaser-examples)
 
 [![Phaser Examples - Screenshot](https://raw.githubusercontent.com/noowxela/phaser-examples/gh-pages/games/demo.png "Phaser Examples - Screenshot")](https://noowxela.github.io/phaser-examples)

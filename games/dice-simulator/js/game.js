@@ -38,6 +38,7 @@ function create() {
   // Add the dice base sprite
   diceBase = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'dice_base_128');
   diceBase.setOrigin(0.5);
+  diceBase.setTint(0xff0000); // Set the tint property to colorize the dice base red
 
   // Add the dice overlay sprite
   diceOverlay = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'dice1');

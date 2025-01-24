@@ -54,6 +54,7 @@ function create() {
   rollButton1 = this.add.sprite(this.cameras.main.centerX - 100, this.cameras.main.centerY + 100, 'rollButton')
     .setInteractive()
     .setOrigin(0.5);
+  rollButton1.setScale(2); // P054e
 
   // Add input listener for the first roll button
   rollButton1.on('pointerdown', (pointer) => {
@@ -75,6 +76,7 @@ function create() {
   rollButton2 = this.add.sprite(this.cameras.main.centerX + 100, this.cameras.main.centerY + 100, 'rollButton')
     .setInteractive()
     .setOrigin(0.5);
+  rollButton2.setScale(2); // P054e
 
   // Add input listener for the second roll button
   rollButton2.on('pointerdown', (pointer) => {

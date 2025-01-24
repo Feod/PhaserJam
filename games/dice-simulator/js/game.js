@@ -12,6 +12,9 @@ const config = {
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH
+  },
+  input: {
+    activePointers: 3 // Allow up to 3 active pointers for multitouch
   }
 };
 
@@ -53,7 +56,11 @@ function create() {
     .setOrigin(0.5);
 
   // Add input listener for the first roll button
-  rollButton1.on('pointerdown', rollDice, this);
+  rollButton1.on('pointerdown', (pointer) => {
+    if (pointer.isDown) {
+      rollDice.call(this);
+    }
+  });
 
   // Add the second dice base sprite
   diceBase2 = this.add.sprite(this.cameras.main.centerX + 100, this.cameras.main.centerY, 'dice_base_128');
@@ -70,7 +77,11 @@ function create() {
     .setOrigin(0.5);
 
   // Add input listener for the second roll button
-  rollButton2.on('pointerdown', rollDice2, this);
+  rollButton2.on('pointerdown', (pointer) => {
+    if (pointer.isDown) {
+      rollDice2.call(this);
+    }
+  });
 
   // Add the score text
   scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });

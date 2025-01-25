@@ -145,12 +145,6 @@ function handlePlayerInput(player, action) {
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;
       }
-    } else if (playerState === 'rod-in-water') {
-      playerState = 'pulling-rod-out';
-      playerAnticipation = anticipationFrames;
-    } else if (playerState === 'pulling-rod-out') {
-      playerState = 'idle';
-      playerSprite.setTexture(playerIdleTexture);
     }
   } else if (action === 'pointerup' || action === 'keyup') {
     if (playerState === 'pulling-rod-out' && playerAnticipation > 0) {

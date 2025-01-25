@@ -41,6 +41,8 @@ let matchTimer = 120; // 2 minutes in seconds
 let player1FishCount = 0;
 let player2FishCount = 0;
 let waitingForMatchStart = true;
+let player1GotFish = false;
+let player2GotFish = false;
 
 let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel;
 
@@ -183,23 +185,19 @@ function handlePlayerInput(player, action, scene) {
   inputCooldown = true;
   setTimeout(() => (inputCooldown = false), 200); // 200ms cooldown
   // Your existing input handling logic here...
-  
+
 
   if (!matchStarted && !waitingForMatchStart) return; // Disable player input when match ends and not waiting for match start
 
   let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
 
+  let tweenTarget;
+
   if (player === 1) {
 
-    scene.tweens.add({
-      targets: [player1],
-      scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
-      scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
-      rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
-      ease: 'Power2',
-      paused: true
-    }).play();
+    tweenTarget = player1;
 
+    
     playerState = player1State;
     playerCooldown = player1Cooldown;
     playerRodTime = player1RodTime;
@@ -210,6 +208,8 @@ function handlePlayerInput(player, action, scene) {
     playerRodInWaterTexture = 'granpaA_fishing';
     playerPullingRodOutTexture = 'granpaA_fishing';
   } else {
+
+    tweenTarget = player2;
 
     scene.tweens.add({
       targets: [player2],
@@ -234,6 +234,16 @@ function handlePlayerInput(player, action, scene) {
   if (action === 'pointerdown' || action === 'keydown') {
     if (playerState === 'idle' && playerCooldown === 0) {
       playerState = 'rod-in-water';
+
+      scene.tweens.add({
+        targets: tweenTarget,
+        scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+        scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+        rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+        ease: 'Power2',
+        paused: true
+      }).play();
+
       playerSprite.setTexture(playerRodInWaterTexture, 1);
       playerRodTime = 0;
       const randomPlopSound = Phaser.Math.Between(0, plopSound.length - 1);
@@ -264,6 +274,16 @@ function handlePlayerInput(player, action, scene) {
       
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';
+
+      scene.tweens.add({
+        targets: tweenTarget,
+        scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+        scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+        rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+        ease: 'Power2',
+        paused: true
+      }).play();
+
       playerSprite.setTexture(playerRodInWaterTexture, 1);
       const randomPlopSound = Phaser.Math.Between(0, 2);
       plopSound[randomPlopSound].play();
@@ -271,6 +291,16 @@ function handlePlayerInput(player, action, scene) {
   } else if (action === 'pointerup' || action === 'keyup') {
     if (playerState === 'rod-in-water') {
       playerState = 'pulling-rod-out';
+
+      scene.tweens.add({
+        targets: tweenTarget,
+        scaleX: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+        scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+        rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+        ease: 'Power2',
+        paused: true
+      }).play();
+
       playerSprite.setTexture(playerPullingRodOutTexture, 2);
       playerAnticipation = anticipationFrames;
       if (player === 1) {
@@ -299,9 +329,13 @@ function handlePlayerInput(player, action, scene) {
 }
 
 function updatePlayerState(player) {
-  let playerState, playerAnticipation, playerRodTime, playerCooldown, playerShowLootTime, playerSprite, playerIdleTexture, playerPullFinishNoFishTexture, playerPullFinishYayFishTexture, playerFishCount;
+  let playerState, playerAnticipation, playerRodTime, playerCooldown, playerShowLootTime, playerSprite, playerIdleTexture, playerPullFinishNoFishTexture, playerPullFinishYayFishTexture, playerFishCount, gotFish;
+  let tweenTarget;
 
   if (player === 1) {
+    tweenTarget = player1;
+    gotFish = player1GotFish;
+
     playerState = player1State;
     playerAnticipation = player1Anticipation;
     playerRodTime = player1RodTime;
@@ -313,6 +347,9 @@ function updatePlayerState(player) {
     playerPullFinishYayFishTexture = 'granpaA_results';
     playerFishCount = player1FishCount;
   } else {
+    tweenTarget = player2;
+    gotFish = player2GotFish;
+
     playerState = player2State;
     playerAnticipation = player2Anticipation;
     playerRodTime = player2RodTime;
@@ -333,20 +370,29 @@ function updatePlayerState(player) {
     playerAnticipation--;
     if (playerAnticipation === 0) {
       playerState = 'pull-finish';
+
+      
       const hasFish = checkFishCatch(playerRodTime);
       playerSprite.setTexture(hasFish ? playerPullFinishYayFishTexture : playerPullFinishNoFishTexture, hasFish ? 3 : 2);
       playerCooldown = cooldownFrames;
       if (hasFish) {
+        
         playerFishCount++;
         if (player === 1) {
+          player1GotFish = true;
           grandpaAHappySound.play();
         } else {
+          player2GotFish = true;
           grandpaBHappySound.play();
         }
+        
       } else {
+
         if (player === 1) {
+          player1GotFish = false;
           grandpaASadSound.play();
         } else {
+          player2GotFish = false;
           grandpaBSadSound.play();
         }
       }
@@ -354,6 +400,27 @@ function updatePlayerState(player) {
   }
 
   if (playerState === 'pull-finish') {
+
+    if (gotFishh) {
+      scene.tweens.add({
+        targets: tweenTarget,
+        scaleX: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+        scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+        rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+        ease: 'Power2',
+        paused: true
+      }).play();
+    }else{
+      scene.tweens.add({
+        targets: tweenTarget,
+        scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+        scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+        rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+        ease: 'Power2',
+        paused: true
+      }).play();
+    }
+
     playerState = 'show-loot';
     playerShowLootTime = showLootFrames;
   }

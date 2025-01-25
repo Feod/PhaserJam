@@ -94,6 +94,7 @@ function update() {
   if (matchStarted) {
     matchTimer--;
     if (matchTimer <= 0) {
+      matchTimer = 0;
       endMatch();
     }
   }

@@ -196,7 +196,7 @@ function handlePlayerInput(player, action) {
       playerSprite.setTexture(playerRodInWaterTexture, 1);
       playerRodTime = 0;
       const randomPlopSound = Phaser.Math.Between(0, 2);
-      this.sound.play(`plop-${randomPlopSound}`);
+      plopSound[randomPlopSound].play();
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;
       }
@@ -204,7 +204,7 @@ function handlePlayerInput(player, action) {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture, 1);
       const randomPlopSound = Phaser.Math.Between(0, 2);
-      this.sound.play(`plop-${randomPlopSound}`);
+      plopSound[randomPlopSound].play();
     }
   } else if (action === 'pointerup' || action === 'keyup') {
     if (playerState === 'rod-in-water') {

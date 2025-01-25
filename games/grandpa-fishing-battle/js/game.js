@@ -155,8 +155,8 @@ function create() {
   lure2.setScale(0.25);
 
   // Hide lures initially
-  lure1.setVisible(false);
-  lure2.setVisible(false);
+  SetLureVisible(lure1, false, this);
+  SetLureVisible(lure2, false, this);
 
   // Store lures in player objects
   player1.lure = lure1;
@@ -308,13 +308,13 @@ function handlePlayerInput(player, action, scene) {
         matchFinished = false;
         matchTimer = 1200;
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
-        player1.lure.setVisible(matchStarted);
-        player2.lure.setVisible(matchStarted);
+        SetLureVisible(player1.lure, matchStarted, scene);
+        SetLureVisible(player2.lure, matchStarted, scene);
 
       }
 
       // Show lure
-      playerLure.setVisible(matchStarted);
+      SetLureVisible(playerLure, matchStarted, scene);
 
       // Play tween animation for grandpa's scale and rotation
       //if (grandpaTween.isPlaying()) {
@@ -350,7 +350,7 @@ function handlePlayerInput(player, action, scene) {
       plopSound[randomPlopSound].play();
 
       // Show lure
-      playerLure.setVisible(true);
+      SetLureVisible(playerLure, true, scene);
     }else if(playerCooldown > 0){
       //Give some sort of tiny animation as a feedback
       scene.tweens.add({
@@ -382,7 +382,7 @@ function handlePlayerInput(player, action, scene) {
       outOfWaterSplashSounds[randomSplashSound].play();
 
       // Show lure
-      playerLure.setVisible(matchStarted);
+      SetLureVisible(playerLure, matchStarted, scene);
     }
 
     scene.tweens.add({
@@ -542,7 +542,7 @@ function updatePlayerState(player, scene) {
     }
 
     // Hide lure
-    playerLure.setVisible(false);
+    SetLureVisible(playerLure, false, scene);
     
   }
 

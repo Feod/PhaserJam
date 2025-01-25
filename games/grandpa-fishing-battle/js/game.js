@@ -345,7 +345,7 @@ function changeWeather() {
   weather = weathers[Phaser.Math.Between(0, weathers.length - 1)];
 }
 
-function endMatch() {
+const endMatch = () => {
   matchStarted = false;
   let winner;
   if (player1FishCount > player2FishCount) {

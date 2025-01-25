@@ -12,15 +12,31 @@ const config = {
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH
+  },
+  input: {
+    activePointers: 3 // Allow up to 3 active pointers for multitouch
   }
 };
 
 const game = new Phaser.Game(config);
 
-//Game description: Game is about two grandpas fishing. 2player game played with from the same keyboard.
+//Game is about two grandpas fishing.
 
 function preload() {
-  this.load.image('grandpaTest', 'assets/grandpaTest.png');
+  this.load.image('grandpa1-idle', 'assets/grandpa1-idle.png');
+  this.load.image('grandpa1-rod-in-water', 'assets/grandpa1-rod-in-water.png');
+  this.load.image('grandpa1-pulling-rod-out', 'assets/grandpa1-pulling-rod-out.png');
+  this.load.image('grandpa1-pull-finish-no-fish', 'assets/grandpa1-pull-finish-no-fish.png');
+  this.load.image('grandpa1-pull-finish-YAY-FISH', 'assets/grandpa1-pull-finish-YAY-FISH.png');
+
+  this.load.image('grandpa2-idle', 'assets/grandpa2-idle.png');
+  this.load.image('grandpa2-rod-in-water', 'assets/grandpa2-rod-in-water.png');
+  this.load.image('grandpa2-pulling-rod-out', 'assets/grandpa2-pulling-rod-out.png');
+  this.load.image('grandpa2-pull-finish-no-fish', 'assets/grandpa2-pull-finish-no-fish.png');
+  this.load.image('grandpa2-pull-finish-YAY-FISH', 'assets/grandpa2-pull-finish-YAY-FISH.png');
+
+  this.load.image('button', 'assets/button.png');
+
 }
 
 function create() {

@@ -92,8 +92,8 @@ function create() {
   background.displayWidth = this.sys.game.config.width;
   background.displayHeight = this.sys.game.config.height;
 
-  player1 = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'granpaA_fishing', 0);
-  player2 = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'granpaB_fishing', 0);
+  player1 = this.add.sprite(this.cameras.main.centerX - 100, this.cameras.main.centerY, 'granpaA_fishing', 0);
+  player2 = this.add.sprite(this.cameras.main.centerX + 100, this.cameras.main.centerY, 'granpaB_fishing', 0);
 
   // Scale down player1 by 1/4
   player1.setScale(0.25);

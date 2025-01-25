@@ -47,7 +47,7 @@ const anticipationFrames = 30;
 const cooldownFrames = 60;
 const showLootFrames = 90;
 
-let plopSound;
+let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound;
 
 function preload() {
   this.load.image('background', 'assets/background.png');
@@ -123,6 +123,17 @@ function create() {
   this.input.keyboard.on('keyup-X', () => handlePlayerInput(2, 'keyup'));
 
   plopSound = this.sound.add('plop');
+  grandpaAPullFromWaterSound = this.sound.add('grandpaA-pull-from-water');
+  grandpaBPullFromWaterSound = this.sound.add('grandpaB-pull-from-water');
+  outOfWaterSplashSounds = [
+    this.sound.add('out-of-water-splash-0'),
+    this.sound.add('out-of-water-splash-1'),
+    this.sound.add('out-of-water-splash-2')
+  ];
+  grandpaAHappySound = this.sound.add('grandpaA-happy');
+  grandpaBHappySound = this.sound.add('grandpaB-happy');
+  grandpaASadSound = this.sound.add('grandpaA-sad');
+  grandpaBSadSound = this.sound.add('grandpaB-sad');
 }
 
 function update() {
@@ -180,20 +191,29 @@ function handlePlayerInput(player, action) {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture, 1);
       playerRodTime = 0;
-      plopSound.play();
+      const randomPlopSound = Phaser.Math.Between(0, 2);
+      this.sound.play(`plop-${randomPlopSound}`);
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;
       }
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture, 1);
-      plopSound.play();
+      const randomPlopSound = Phaser.Math.Between(0, 2);
+      this.sound.play(`plop-${randomPlopSound}`);
     }
   } else if (action === 'pointerup' || action === 'keyup') {
     if (playerState === 'rod-in-water') {
       playerState = 'pulling-rod-out';
       playerSprite.setTexture(playerPullingRodOutTexture, 2);
       playerAnticipation = anticipationFrames;
+      if (player === 1) {
+        grandpaAPullFromWaterSound.play();
+      } else {
+        grandpaBPullFromWaterSound.play();
+      }
+      const randomSplashSound = Phaser.Math.Between(0, 2);
+      outOfWaterSplashSounds[randomSplashSound].play();
     }
   }
 
@@ -252,6 +272,17 @@ function updatePlayerState(player) {
       playerCooldown = cooldownFrames;
       if (hasFish) {
         playerFishCount++;
+        if (player === 1) {
+          grandpaAHappySound.play();
+        } else {
+          grandpaBHappySound.play();
+        }
+      } else {
+        if (player === 1) {
+          grandpaASadSound.play();
+        } else {
+          grandpaBSadSound.play();
+        }
       }
     }
   }
@@ -282,7 +313,7 @@ function updatePlayerState(player) {
     player1FishCount = playerFishCount;
   } else {
     player2State = playerState;
-    player2Anticipation = player2Anticipation;
+    player2Anticipation = playerAnticipation;
     player2RodTime = playerRodTime;
     player2Cooldown = playerCooldown;
     player2ShowLootTime = playerShowLootTime;

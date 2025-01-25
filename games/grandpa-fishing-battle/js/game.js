@@ -98,8 +98,8 @@ function create() {
   background.displayWidth = this.sys.game.config.width;
   background.displayHeight = this.sys.game.config.height;
 
-  player1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY, 'granpaA_fishing', 0);
-  player2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY, 'granpaB_fishing', 0);
+  player1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY-100, 'granpaA_fishing', 0);
+  player2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY-100, 'granpaB_fishing', 0);
 
   // Scale down player1 by 1/4
   player1.setScale(0.25);
@@ -147,9 +147,9 @@ function create() {
   grandpaBSadSound = this.sound.add('grandpaB-sad');
 
   // Add lure sprites for each player and scale them to 1/4 size
-  const lure1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY + 50, 'lure');
+  const lure1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY + 150, 'lure');
   lure1.setScale(0.25);
-  const lure2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY + 50, 'lure');
+  const lure2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY + 150, 'lure');
   lure2.setScale(0.25);
 
   // Hide lures initially

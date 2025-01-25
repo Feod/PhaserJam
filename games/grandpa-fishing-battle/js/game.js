@@ -95,6 +95,7 @@ function create() {
 
   // Scale down player1 by 1/4
   player1.setScale(0.25); // P5b59
+  player2.setScale(0.25); // Pdcb6
 
   player1Button = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 150, 'button')
     .setInteractive()

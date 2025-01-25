@@ -91,7 +91,7 @@ function create() {
   background.displayHeight = this.sys.game.config.height;
 
   player1 = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'granpaA_fishing', 0);
-  player2 = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'grandpa2-idle');
+  player2 = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'granpaB_fishing', 0);
 
   // Scale down player1 by 1/4
   player1.setScale(0.25); // P5b59
@@ -185,9 +185,9 @@ function handlePlayerInput(player, action) {
     playerAnticipation = player2Anticipation;
     playerShowLootTime = player2ShowLootTime;
     playerSprite = player2;
-    playerIdleTexture = 'grandpa2-idle';
-    playerRodInWaterTexture = 'grandpa2-rod-in-water';
-    playerPullingRodOutTexture = 'grandpa2-pulling-rod-out';
+    playerIdleTexture = 'granpaB_fishing';
+    playerRodInWaterTexture = 'granpaB_fishing';
+    playerPullingRodOutTexture = 'granpaB_fishing';
   }
 
   if (action === 'pointerdown' || action === 'keydown') {
@@ -260,9 +260,9 @@ function updatePlayerState(player) {
     playerCooldown = player2Cooldown;
     playerShowLootTime = player2ShowLootTime;
     playerSprite = player2;
-    playerIdleTexture = 'grandpa2-idle';
-    playerPullFinishNoFishTexture = 'grandpa2-pull-finish-no-fish';
-    playerPullFinishYayFishTexture = 'grandpa2-pull-finish-YAY-FISH';
+    playerIdleTexture = 'granpaB_fishing';
+    playerPullFinishNoFishTexture = 'granpaB_results';
+    playerPullFinishYayFishTexture = 'granpaB_results';
     playerFishCount = player2FishCount;
   }
 
@@ -356,15 +356,15 @@ const endMatch = function () {
   if (player1FishCount > player2FishCount) {
     winner = 'Player 1';
     player1.setTexture('granpaA_results', 3); // Winning player with fish captured sprite
-    player2.setTexture('grandpa2-pull-finish-no-fish', 2); // Losing player with sad sprite
+    player2.setTexture('granpaB_results', 2); // Losing player with sad sprite
   } else if (player2FishCount > player1FishCount) {
     winner = 'Player 2';
-    player2.setTexture('grandpa2-pull-finish-YAY-FISH', 3); // Winning player with fish captured sprite
+    player2.setTexture('granpaB_results', 3); // Winning player with fish captured sprite
     player1.setTexture('granpaA_results', 2); // Losing player with sad sprite
   } else {
     winner = 'No one';
     player1.setTexture('granpaA_results', 2); // Both players with sad sprite
-    player2.setTexture('grandpa2-pull-finish-no-fish', 2);
+    player2.setTexture('granpaB_results', 2);
   }
 
   // Add winner text

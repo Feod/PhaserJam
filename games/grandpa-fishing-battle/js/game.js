@@ -385,7 +385,7 @@ function updatePlayerState(player) {
           player2GotFish = true;
           grandpaBHappySound.play();
         }
-        
+
       } else {
 
         if (player === 1) {
@@ -401,7 +401,7 @@ function updatePlayerState(player) {
 
   if (playerState === 'pull-finish') {
 
-    if (gotFishh) {
+    if (gotFish) {
       scene.tweens.add({
         targets: tweenTarget,
         scaleX: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },

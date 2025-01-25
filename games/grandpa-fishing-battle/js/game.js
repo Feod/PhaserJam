@@ -231,7 +231,7 @@ function handlePlayerInput(player, action, scene) {
         rotation: { from: 0, to: 0.1, yoyo: true, duration: 300 },
         ease: 'Power2',
         paused: true
-      });
+      }).play();
 
       
     } else if (playerState === 'pulling-rod-out') {

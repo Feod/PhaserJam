@@ -174,7 +174,7 @@ function update() {
   matchTimerLabel.setText('Match Time: ' + matchTimer);
 }
 
-function handlePlayerInput(player, action, this) {
+function handlePlayerInput(player, action, scene) {
   if (!matchStarted && !waitingForMatchStart) return; // Disable player input when match ends and not waiting for match start
 
   let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
@@ -216,7 +216,7 @@ function handlePlayerInput(player, action, this) {
       }
 
       // Play tween animation for grandpa's scale and rotation
-      this.tweens.getTweensOf(playerSprite)[0].play();
+      scene.tweens.getTweensOf(playerSprite)[0].play();
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture, 1);

@@ -218,11 +218,21 @@ function handlePlayerInput(player, action, scene) {
       }
 
       // Play tween animation for grandpa's scale and rotation
-      if (grandpaTween.isPlaying()) {
-        grandpaTween.restart();
-      } else {
-        grandpaTween.play();
-      }
+      //if (grandpaTween.isPlaying()) {
+      //  grandpaTween.restart();
+      //} else {
+      //  grandpaTween.play();
+      //}
+
+      scene.tweens.add({
+        targets: [player1, player2],
+        scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 100 },
+        scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 200 },
+        rotation: { from: 0, to: 0.1, yoyo: true, duration: 300 },
+        ease: 'Power2',
+        paused: true
+      });
+
       
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';

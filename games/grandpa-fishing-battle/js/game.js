@@ -306,6 +306,9 @@ function handlePlayerInput(player, action, scene) {
         matchFinished = false;
         matchTimer = 1200;
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
+        player1.lure.setVisible(matchStarted);
+        player2.lure.setVisible(matchStarted);
+
       }
 
       // Show lure
@@ -404,6 +407,27 @@ function handlePlayerInput(player, action, scene) {
     player2Anticipation = playerAnticipation;
     player2ShowLootTime = playerShowLootTime;
   }
+}
+
+function SetLureVisible(theLure, visible, scene){
+  //if state didnt change then dont do anything
+  if(theLure.visible === visible) return;
+
+  theLure.setVisible(visible);
+  //Tween lure
+  if(visible){
+
+    scene.tweens.add({
+      targets: theLure,
+      scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+      scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+      positionY: { from: theLure.y, to: theLure.y - 400, yoyo: true, duration: 50 },
+      ease: 'Power2',
+      paused: true
+    }).play();
+
+  }
+  
 }
 
 function updatePlayerState(player, scene) {

@@ -62,13 +62,13 @@ function preload() {
 }
 
 function create() {
-  player1 = this.add.sprite(this.cameras.main.centerX - 200, this.cameras.main.centerY, 'grandpa1-idle');
-  player2 = this.add.sprite(this.cameras.main.centerX + 200, this.cameras.main.centerY, 'grandpa2-idle');
+  player1 = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY, 'grandpa1-idle');
+  player2 = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY, 'grandpa2-idle');
 
-  player1Button = this.add.sprite(this.cameras.main.centerX - 200, this.cameras.main.centerY + 200, 'button')
+  player1Button = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY + 150, 'button')
     .setInteractive()
     .setOrigin(0.5);
-  player2Button = this.add.sprite(this.cameras.main.centerX + 200, this.cameras.main.centerY + 200, 'button')
+  player2Button = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY + 150, 'button')
     .setInteractive()
     .setOrigin(0.5);
 

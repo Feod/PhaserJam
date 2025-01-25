@@ -48,6 +48,8 @@ const cooldownFrames = 60;
 const showLootFrames = 90;
 
 function preload() {
+  this.load.image('background', 'assets/background.png');
+
   this.load.image('grandpa1-idle', 'assets/grandpa1-idle.png');
   this.load.image('grandpa1-rod-in-water', 'assets/grandpa1-rod-in-water.png');
   this.load.image('grandpa1-pulling-rod-out', 'assets/grandpa1-pulling-rod-out.png');

@@ -166,6 +166,8 @@ function update() {
 }
 
 function handlePlayerInput(player, action) {
+  if (!matchStarted) return; // Disable player input when match ends
+
   let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
 
   if (player === 1) {
@@ -199,6 +201,8 @@ function handlePlayerInput(player, action) {
       plopSound[randomPlopSound].play();
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;
+        matchTimer = 120; // Reset match timer to 120 seconds
+        matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
       }
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';
@@ -351,10 +355,16 @@ const endMatch = function () {
   let winner;
   if (player1FishCount > player2FishCount) {
     winner = 'Player 1';
+    player1.setTexture('granpaA_results', 3); // Winning player with fish captured sprite
+    player2.setTexture('grandpa2-pull-finish-no-fish', 2); // Losing player with sad sprite
   } else if (player2FishCount > player1FishCount) {
     winner = 'Player 2';
+    player2.setTexture('grandpa2-pull-finish-YAY-FISH', 3); // Winning player with fish captured sprite
+    player1.setTexture('granpaA_results', 2); // Losing player with sad sprite
   } else {
     winner = 'No one';
+    player1.setTexture('granpaA_results', 2); // Both players with sad sprite
+    player2.setTexture('grandpa2-pull-finish-no-fish', 2);
   }
 
   // Add winner text
@@ -380,4 +390,3 @@ const endMatch = function () {
     this.scene.restart(); // Restart the scene
   });
 }
-

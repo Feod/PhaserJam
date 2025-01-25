@@ -22,7 +22,7 @@ const game = new Phaser.Game(config);
 
 //Game is about two grandpas fishing.
 
-spacebar;
+let spacebar;
 
 
 let player1, player2;

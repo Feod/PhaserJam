@@ -32,6 +32,8 @@ let player1Cooldown = 0;
 let player2Cooldown = 0;
 let player1RodTime = 0;
 let player2RodTime = 0;
+let player1ShowLootTime = 0;
+let player2ShowLootTime = 0;
 let weather = 'sunny';
 let weatherTimer = 0;
 let matchStarted = false;
@@ -43,6 +45,7 @@ let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel;
 
 const anticipationFrames = 30;
 const cooldownFrames = 60;
+const showLootFrames = 90;
 
 function preload() {
   this.load.image('grandpa1-idle', 'assets/grandpa1-idle.png');
@@ -116,13 +119,14 @@ function update() {
 }
 
 function handlePlayerInput(player, action) {
-  let playerState, playerCooldown, playerRodTime, playerAnticipation, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
+  let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
 
   if (player === 1) {
     playerState = player1State;
     playerCooldown = player1Cooldown;
     playerRodTime = player1RodTime;
     playerAnticipation = player1Anticipation;
+    playerShowLootTime = player1ShowLootTime;
     playerSprite = player1;
     playerIdleTexture = 'grandpa1-idle';
     playerRodInWaterTexture = 'grandpa1-rod-in-water';
@@ -132,6 +136,7 @@ function handlePlayerInput(player, action) {
     playerCooldown = player2Cooldown;
     playerRodTime = player2RodTime;
     playerAnticipation = player2Anticipation;
+    playerShowLootTime = player2ShowLootTime;
     playerSprite = player2;
     playerIdleTexture = 'grandpa2-idle';
     playerRodInWaterTexture = 'grandpa2-rod-in-water';
@@ -163,22 +168,25 @@ function handlePlayerInput(player, action) {
     player1Cooldown = playerCooldown;
     player1RodTime = playerRodTime;
     player1Anticipation = playerAnticipation;
+    player1ShowLootTime = playerShowLootTime;
   } else {
     player2State = playerState;
     player2Cooldown = playerCooldown;
     player2RodTime = playerRodTime;
     player2Anticipation = playerAnticipation;
+    player2ShowLootTime = playerShowLootTime;
   }
 }
 
 function updatePlayerState(player) {
-  let playerState, playerAnticipation, playerRodTime, playerCooldown, playerSprite, playerIdleTexture, playerPullFinishNoFishTexture, playerPullFinishYayFishTexture, playerFishCount;
+  let playerState, playerAnticipation, playerRodTime, playerCooldown, playerShowLootTime, playerSprite, playerIdleTexture, playerPullFinishNoFishTexture, playerPullFinishYayFishTexture, playerFishCount;
 
   if (player === 1) {
     playerState = player1State;
     playerAnticipation = player1Anticipation;
     playerRodTime = player1RodTime;
     playerCooldown = player1Cooldown;
+    playerShowLootTime = player1ShowLootTime;
     playerSprite = player1;
     playerIdleTexture = 'grandpa1-idle';
     playerPullFinishNoFishTexture = 'grandpa1-pull-finish-no-fish';
@@ -189,6 +197,7 @@ function updatePlayerState(player) {
     playerAnticipation = player2Anticipation;
     playerRodTime = player2RodTime;
     playerCooldown = player2Cooldown;
+    playerShowLootTime = player2ShowLootTime;
     playerSprite = player2;
     playerIdleTexture = 'grandpa2-idle';
     playerPullFinishNoFishTexture = 'grandpa2-pull-finish-no-fish';
@@ -214,8 +223,16 @@ function updatePlayerState(player) {
   }
 
   if (playerState === 'pull-finish') {
-    playerState = 'idle';
-    playerSprite.setTexture(playerIdleTexture);
+    playerState = 'show-loot';
+    playerShowLootTime = showLootFrames;
+  }
+
+  if (playerState === 'show-loot') {
+    playerShowLootTime--;
+    if (playerShowLootTime === 0) {
+      playerState = 'idle';
+      playerSprite.setTexture(playerIdleTexture);
+    }
   }
 
   if (playerCooldown > 0) {
@@ -227,12 +244,14 @@ function updatePlayerState(player) {
     player1Anticipation = playerAnticipation;
     player1RodTime = playerRodTime;
     player1Cooldown = playerCooldown;
+    player1ShowLootTime = playerShowLootTime;
     player1FishCount = playerFishCount;
   } else {
     player2State = playerState;
     player2Anticipation = playerAnticipation;
     player2RodTime = playerRodTime;
     player2Cooldown = playerCooldown;
+    player2ShowLootTime = playerShowLootTime;
     player2FishCount = playerFishCount;
   }
 }

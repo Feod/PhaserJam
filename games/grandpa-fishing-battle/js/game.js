@@ -270,7 +270,7 @@ function endMatch() {
   const winnerText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, `${winner} wins!`, { fontSize: '32px', fill: '#fff' });
   winnerText.setOrigin(0.5);
 
-  const playAgainButton = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 50, 'play-again')
+  const playAgainButton = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'play-again')
     .setInteractive()
     .setOrigin(0.5)
     .setVisible(true);

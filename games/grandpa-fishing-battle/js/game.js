@@ -40,6 +40,7 @@ let matchStarted = false;
 let matchTimer = 120; // 2 minutes in seconds
 let player1FishCount = 0;
 let player2FishCount = 0;
+let waitingForMatchStart = true;
 
 let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel;
 
@@ -166,7 +167,7 @@ function update() {
 }
 
 function handlePlayerInput(player, action) {
-  if (!matchStarted) return; // Disable player input when match ends
+  if (!matchStarted && !waitingForMatchStart) return; // Disable player input when match ends and not waiting for match start
 
   let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
 
@@ -201,6 +202,7 @@ function handlePlayerInput(player, action) {
       plopSound[randomPlopSound].play();
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;
+        waitingForMatchStart = false;
         matchTimer = 120; // Reset match timer to 120 seconds
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
       }
@@ -352,6 +354,7 @@ function changeWeather() {
 
 const endMatch = function () {
   matchStarted = false;
+  waitingForMatchStart = true;
   let winner;
   if (player1FishCount > player2FishCount) {
     winner = 'Player 1';

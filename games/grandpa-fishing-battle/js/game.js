@@ -67,6 +67,12 @@ function preload() {
 }
 
 function create() {
+  // Add background image
+  const background = this.add.image(0, 0, 'background');
+  background.setOrigin(0, 0);
+  background.displayWidth = this.sys.game.config.width;
+  background.displayHeight = this.sys.game.config.height;
+
   player1 = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'grandpa1-idle');
   player2 = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'grandpa2-idle');
 

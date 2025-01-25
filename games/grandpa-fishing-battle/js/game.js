@@ -22,6 +22,9 @@ const game = new Phaser.Game(config);
 
 //Game is about two grandpas fishing.
 
+spacebar;
+
+
 let player1, player2;
 let player1Button, player2Button;
 let player1State = 'idle';
@@ -143,16 +146,6 @@ function create() {
   grandpaASadSound = this.sound.add('grandpaA-sad');
   grandpaBSadSound = this.sound.add('grandpaB-sad');
 
-  // Add tween animation for grandpa's scale and rotation
-  grandpaTween = this.tweens.add({
-    targets: [player1, player2],
-    scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 300 },
-    scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 400 },
-    rotation: { from: 0, to: 0.1, yoyo: true }, // rotation doesn't have duration. Is that a problem?
-    ease: 'Power2',
-    paused: true
-  });
-
   // Add lure sprites for each player and scale them to 1/4 size
   const lure1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY + 50, 'lure');
   lure1.setScale(0.25);
@@ -166,9 +159,23 @@ function create() {
   // Store lures in player objects
   player1.lure = lure1;
   player2.lure = lure2;
+
+  this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
 }
 
 function update() {
+
+  //Inputs
+  if (Phaser.Input.Keyboard.JustDown(this.spacebar))
+    {
+        handlePlayerInput(1, 'keydown', this);
+    }
+
+    if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
+      handlePlayerInput(1, 'keyup', this);
+    }
+    
   if (matchStarted) {
     matchTimer--;
     if (matchTimer <= 0) {

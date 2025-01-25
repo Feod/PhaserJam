@@ -64,7 +64,25 @@ function preload() {
   this.load.image('button', 'assets/button.png');
   this.load.image('play-again', 'assets/play-again.png');
 
-  this.load.audio('plop', 'assets/sfx/plop.wav');
+
+  //Use random plop each time
+  this.load.audio('plop-0', 'assets/sfx/plop.wav');
+  this.load.audio('plop-1', 'assets/sfx/rodouttawater7.wav');
+  this.load.audio('plop-2', 'assets/sfx/rodouttawater6.wav');
+
+  this.load.audio('grandpaA-pull-from-water', 'assets/sfx/rodouttawater2_maybetoocomedicandnotwetenough.wav');
+  this.load.audio('grandpaB-pull-from-water', 'assets/sfx/rodouttawater1.wav');
+
+  //Use random splash each time
+  this.load.audio('out-of-water-splash-0', 'assets/sfx/rodouttawater10.wav');
+  this.load.audio('out-of-water-splash-1', 'assets/sfx/rodouttawater9.wav');
+  this.load.audio('out-of-water-splash-2', 'assets/sfx/rodouttawater8.wav');
+
+  this.load.audio('grandpaA-happy', 'assets/sfx/grandpahappy08.wav');
+  this.load.audio('grandpaB-happy', 'assets/sfx/grandpahappy09.wav');
+  this.load.audio('grandpaA-sad', 'assets/sfx/sadgrandpa09.wav');
+  this.load.audio('grandpaB-sad', 'assets/sfx/sadgrandpa08.wav');
+
 }
 
 function create() {

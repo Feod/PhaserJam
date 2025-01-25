@@ -52,11 +52,8 @@ let plopSound;
 function preload() {
   this.load.image('background', 'assets/background.png');
 
-  this.load.image('grandpa1-idle', 'assets/grandpa1-idle.png');
-  this.load.image('grandpa1-rod-in-water', 'assets/grandpa1-rod-in-water.png');
-  this.load.image('grandpa1-pulling-rod-out', 'assets/grandpa1-pulling-rod-out.png');
-  this.load.image('grandpa1-pull-finish-no-fish', 'assets/grandpa1-pull-finish-no-fish.png');
-  this.load.image('grandpa1-pull-finish-YAY-FISH', 'assets/grandpa1-pull-finish-YAY-FISH', 'assets/grandpa1-pull-finish-YAY-FISH.png');
+  this.load.spritesheet('granpaA_fishing', 'assets/granpaA_fishing.png', { frameWidth: 1024, frameHeight: 1024 });
+  this.load.spritesheet('granpaA_results', 'assets/granpaA_results.png', { frameWidth: 1024, frameHeight: 1024 });
 
   this.load.image('grandpa2-idle', 'assets/grandpa2-idle.png');
   this.load.image('grandpa2-rod-in-water', 'assets/grandpa2-rod-in-water.png');
@@ -77,7 +74,7 @@ function create() {
   background.displayWidth = this.sys.game.config.width;
   background.displayHeight = this.sys.game.config.height;
 
-  player1 = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'grandpa1-idle');
+  player1 = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'granpaA_fishing', 0);
   player2 = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'grandpa2-idle');
 
   player1Button = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 150, 'button')
@@ -142,9 +139,9 @@ function handlePlayerInput(player, action) {
     playerAnticipation = player1Anticipation;
     playerShowLootTime = player1ShowLootTime;
     playerSprite = player1;
-    playerIdleTexture = 'grandpa1-idle';
-    playerRodInWaterTexture = 'grandpa1-rod-in-water';
-    playerPullingRodOutTexture = 'grandpa1-pulling-rod-out';
+    playerIdleTexture = 'granpaA_fishing';
+    playerRodInWaterTexture = 'granpaA_fishing';
+    playerPullingRodOutTexture = 'granpaA_fishing';
   } else {
     playerState = player2State;
     playerCooldown = player2Cooldown;
@@ -160,7 +157,7 @@ function handlePlayerInput(player, action) {
   if (action === 'pointerdown' || action === 'keydown') {
     if (playerState === 'idle' && playerCooldown === 0) {
       playerState = 'rod-in-water';
-      playerSprite.setTexture(playerRodInWaterTexture);
+      playerSprite.setTexture(playerRodInWaterTexture, 1);
       playerRodTime = 0;
       plopSound.play();
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
@@ -168,13 +165,13 @@ function handlePlayerInput(player, action) {
       }
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';
-      playerSprite.setTexture(playerRodInWaterTexture);
+      playerSprite.setTexture(playerRodInWaterTexture, 1);
       plopSound.play();
     }
   } else if (action === 'pointerup' || action === 'keyup') {
     if (playerState === 'rod-in-water') {
       playerState = 'pulling-rod-out';
-      playerSprite.setTexture(playerPullingRodOutTexture);
+      playerSprite.setTexture(playerPullingRodOutTexture, 2);
       playerAnticipation = anticipationFrames;
     }
   }
@@ -204,9 +201,9 @@ function updatePlayerState(player) {
     playerCooldown = player1Cooldown;
     playerShowLootTime = player1ShowLootTime;
     playerSprite = player1;
-    playerIdleTexture = 'grandpa1-idle';
-    playerPullFinishNoFishTexture = 'grandpa1-pull-finish-no-fish';
-    playerPullFinishYayFishTexture = 'grandpa1-pull-finish-YAY-FISH';
+    playerIdleTexture = 'granpaA_fishing';
+    playerPullFinishNoFishTexture = 'granpaA_results';
+    playerPullFinishYayFishTexture = 'granpaA_results';
     playerFishCount = player1FishCount;
   } else {
     playerState = player2State;
@@ -230,7 +227,7 @@ function updatePlayerState(player) {
     if (playerAnticipation === 0) {
       playerState = 'pull-finish';
       const hasFish = checkFishCatch(playerRodTime);
-      playerSprite.setTexture(hasFish ? playerPullFinishYayFishTexture : playerPullFinishNoFishTexture);
+      playerSprite.setTexture(hasFish ? playerPullFinishYayFishTexture : playerPullFinishNoFishTexture, hasFish ? 1 : 0);
       playerCooldown = cooldownFrames;
       if (hasFish) {
         playerFishCount++;
@@ -247,7 +244,7 @@ function updatePlayerState(player) {
     playerShowLootTime--;
     if (playerShowLootTime === 0) {
       playerState = 'idle';
-      playerSprite.setTexture(playerIdleTexture);
+      playerSprite.setTexture(playerIdleTexture, 0);
     }
   }
 

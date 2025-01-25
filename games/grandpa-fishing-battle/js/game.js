@@ -230,7 +230,7 @@ function updatePlayerState(player) {
     if (playerAnticipation === 0) {
       playerState = 'pull-finish';
       const hasFish = checkFishCatch(playerRodTime);
-      playerSprite.setTexture(hasFish ? playerPullFinishYayFishTexture : playerPullFinishNoFishTexture, hasFish ? 1 : 0);
+      playerSprite.setTexture(hasFish ? playerPullFinishYayFishTexture : playerPullFinishNoFishTexture, hasFish ? 3 : 2);
       playerCooldown = cooldownFrames;
       if (hasFish) {
         playerFishCount++;

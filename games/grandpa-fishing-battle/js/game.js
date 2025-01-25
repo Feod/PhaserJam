@@ -145,15 +145,15 @@ function handlePlayerInput(player, action) {
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;
       }
+    } else if (playerState === 'pulling-rod-out') {
+      playerState = 'rod-in-water';
+      playerSprite.setTexture(playerRodInWaterTexture);
     }
   } else if (action === 'pointerup' || action === 'keyup') {
     if (playerState === 'rod-in-water') {
       playerState = 'pulling-rod-out';
       playerSprite.setTexture(playerPullingRodOutTexture);
       playerAnticipation = anticipationFrames;
-    } else if (playerState === 'pulling-rod-out' && playerAnticipation > 0) {
-      playerState = 'rod-in-water';
-      playerSprite.setTexture(playerRodInWaterTexture);
     }
   }
 

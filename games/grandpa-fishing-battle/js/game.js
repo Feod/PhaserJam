@@ -25,6 +25,7 @@ const game = new Phaser.Game(config);
 let p1key;
 let p2key;
 
+let background;
 let player1, player2;
 let player1Button, player2Button;
 let player1State = 'idle';
@@ -93,7 +94,7 @@ function preload() {
 
 function create() {
   // Add background image
-  const background = this.add.image(0, 0, 'background');
+  background = this.add.image(0, 0, 'background');
   background.setOrigin(0, 0);
   background.displayWidth = this.sys.game.config.width;
   background.displayHeight = this.sys.game.config.height;
@@ -597,7 +598,7 @@ function changeWeather() {
 }
 
 function setBackgroundTint(weather) {
-  const background = this.children.getByName('background');
+  //const background = this.children.getByName('background');
   switch (weather) {
     case 'sunny':
       background.setTint(0xffffff); // No tint

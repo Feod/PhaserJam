@@ -183,7 +183,7 @@ function handlePlayerInput(player, action, scene) {
 
   if (inputCooldown) return;
   inputCooldown = true;
-  setTimeout(() => (inputCooldown = false), 200); // 200ms cooldown
+  setTimeout(() => (inputCooldown = false), 10); // 200ms cooldown
   // Your existing input handling logic here...
 
 

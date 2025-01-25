@@ -67,7 +67,7 @@ function preload() {
   this.load.image('button', 'assets/button.png');
   this.load.image('play-again', 'assets/play-again.png');
 
-  this.load.audio('plop', 'assets/plop.mp3');
+  this.load.audio('plop', 'assets/sfx/plop.wav');
 }
 
 function create() {

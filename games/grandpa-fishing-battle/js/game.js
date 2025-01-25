@@ -251,7 +251,7 @@ function handlePlayerInput(player, action, scene) {
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;
         waitingForMatchStart = false;
-        matchTimer = 120; // Reset match timer to 120 seconds
+        matchTimer = 1200;
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
       }
 
@@ -402,7 +402,7 @@ function updatePlayerState(player, scene) {
   if (playerState === 'pull-finish' && matchStarted) {
 
     if(matchStarted){
-      
+
       if (gotFish) {
         scene.tweens.add({
           targets: tweenTarget,

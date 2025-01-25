@@ -176,7 +176,15 @@ function update() {
   matchTimerLabel.setText('Match Time: ' + matchTimer);
 }
 
+let inputCooldown = false;
 function handlePlayerInput(player, action, scene) {
+
+  if (inputCooldown) return;
+  inputCooldown = true;
+  setTimeout(() => (inputCooldown = false), 200); // 200ms cooldown
+  // Your existing input handling logic here...
+  
+
   if (!matchStarted && !waitingForMatchStart) return; // Disable player input when match ends and not waiting for match start
 
   let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;

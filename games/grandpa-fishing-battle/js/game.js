@@ -280,9 +280,6 @@ function handlePlayerInput(player, action, scene) {
         paused: true
       }).play();
     }
-
-    
-
     return;
   }
 
@@ -312,7 +309,7 @@ function handlePlayerInput(player, action, scene) {
       }
 
       // Show lure
-      playerLure.setVisible(true);
+      playerLure.setVisible(matchStarted);
 
       // Play tween animation for grandpa's scale and rotation
       //if (grandpaTween.isPlaying()) {
@@ -362,18 +359,13 @@ function handlePlayerInput(player, action, scene) {
     }
     
   } else if (action === 'pointerup' || action === 'keyup') {
-    if (playerState === 'rod-in-water') {
+    if(!matchStarted){
+      playerState = 'idle';
+      playerSprite.setTexture(playerIdleTexture, 0);
+      playerCooldown = 0;
+    }
+    else if (playerState === 'rod-in-water') {
       playerState = 'pulling-rod-out';
-
-      scene.tweens.add({
-        targets: tweenTarget,
-        scaleX: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
-        scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
-        rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
-        ease: 'Power2',
-        paused: true
-      }).play();
-
       playerSprite.setTexture(playerPullingRodOutTexture, 2);
       playerAnticipation = anticipationFrames;
       if (player === 1) {
@@ -385,8 +377,18 @@ function handlePlayerInput(player, action, scene) {
       outOfWaterSplashSounds[randomSplashSound].play();
 
       // Show lure
-      playerLure.setVisible(true);
+      playerLure.setVisible(matchStarted);
     }
+
+    scene.tweens.add({
+      targets: tweenTarget,
+      scaleX: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+      scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+      rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+      ease: 'Power2',
+      paused: true
+    }).play();
+
   }
 
   if (player === 1) {

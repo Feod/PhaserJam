@@ -50,6 +50,8 @@ const showLootFrames = 90;
 
 let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound;
 
+let grandpaTween;
+
 function preload() {
   this.load.image('background', 'assets/background.png');
 
@@ -139,7 +141,7 @@ function create() {
   grandpaBSadSound = this.sound.add('grandpaB-sad');
 
   // Add tween animation for grandpa's scale and rotation
-  this.tweens.add({
+  grandpaTween = this.tweens.add({
     targets: [player1, player2],
     scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 300 },
     scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 400 },
@@ -216,7 +218,12 @@ function handlePlayerInput(player, action, scene) {
       }
 
       // Play tween animation for grandpa's scale and rotation
-      scene.tweens.getTweensOf(playerSprite)[0].play();
+      if (grandpaTween.isPlaying()) {
+        grandpaTween.restart();
+      } else {
+        grandpaTween.play();
+      }
+      
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture, 1);

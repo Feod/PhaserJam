@@ -22,8 +22,8 @@ const game = new Phaser.Game(config);
 
 //Game is about two grandpas fishing.
 
-let spacebar;
-
+let p1key;
+let p2key;
 
 let player1, player2;
 let player1Button, player2Button;
@@ -112,10 +112,10 @@ function create() {
     .setInteractive()
     .setOrigin(0.5);
 
-  player1Button.on('pointerdown', () => handlePlayerInput(1, 'pointerdown', this));
-  player1Button.on('pointerup', () => handlePlayerInput(1, 'pointerup', this));
-  player2Button.on('pointerdown', () => handlePlayerInput(2, 'pointerdown', this));
-  player2Button.on('pointerup', () => handlePlayerInput(2, 'pointerup', this));
+  player1Button.on('pointerdown', () => handlePlayerInput(1, 'keydown', this));
+  player1Button.on('pointerup', () => handlePlayerInput(1, 'keyup', this));
+  player2Button.on('pointerdown', () => handlePlayerInput(2, 'keydown', this));
+  player2Button.on('pointerup', () => handlePlayerInput(2, 'keyup', this));
 
   // Add debug labels
   player1StateLabel = this.add.text(16, 16, 'Player 1 State: ' + player1State, { fontSize: '16px', fill: '#fff' });
@@ -124,10 +124,10 @@ function create() {
   matchTimerLabel = this.add.text(16, 76, 'Match Time: ' + matchTimer, { fontSize: '16px', fill: '#fff' });
 
   // Add key bindings
-  this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown', this));
-  this.input.keyboard.on('keyup-Z', () => handlePlayerInput(1, 'keyup', this));
-  this.input.keyboard.on('keydown-X', () => handlePlayerInput(2, 'keydown', this));
-  this.input.keyboard.on('keyup-X', () => handlePlayerInput(2, 'keyup', this));
+  //this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown', this));
+  //this.input.keyboard.on('keyup-Z', () => handlePlayerInput(1, 'keyup', this));
+  //this.input.keyboard.on('keydown-X', () => handlePlayerInput(2, 'keydown', this));
+  //this.input.keyboard.on('keyup-X', () => handlePlayerInput(2, 'keyup', this));
 
   plopSound = [
     this.sound.add('plop-0'),
@@ -160,21 +160,34 @@ function create() {
   player1.lure = lure1;
   player2.lure = lure2;
 
-  this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+  this.p1key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+  this.p2key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
 
 }
 
 function update() {
 
   //Inputs
-  if (Phaser.Input.Keyboard.JustDown(this.spacebar))
-    {
-        handlePlayerInput(1, 'keydown', this);
-    }
+  if (Phaser.Input.Keyboard.JustDown(this.p1key))
+  {
+      handlePlayerInput(1, 'keydown', this);
+  }
 
-    if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
-      handlePlayerInput(1, 'keyup', this);
-    }
+  if(Phaser.Input.Keyboard.JustUp(this.p1key))
+  {
+    handlePlayerInput(1, 'keyup', this);
+  }
+
+  if (Phaser.Input.Keyboard.JustDown(this.p2key))
+  {
+    handlePlayerInput(2, 'keydown', this);
+  }
+
+  if(Phaser.Input.Keyboard.JustUp(this.p2key))
+  {
+    handlePlayerInput(2, 'keyup', this);
+  }
+
     
   if (matchStarted) {
     matchTimer--;
@@ -204,8 +217,6 @@ let inputCooldownP1 = false;
 let inputCooldownP2 = false;
 
 function handlePlayerInput(player, action, scene) {
-
-  
 
   if (!matchStarted && !waitingForMatchStart) return; // Disable player input when match ends and not waiting for match start
 
@@ -249,15 +260,28 @@ function handlePlayerInput(player, action, scene) {
 
   if(matchFinished){
     
-    scene.tweens.add({
-      targets: tweenTarget,
-      scaleX: { from: 0.25, to: 0.32, yoyo: true, duration: 50 },
-      scaleY: { from: 0.25, to: 0.28, yoyo: true, duration: 50 },
-      positionY: { from: playerSprite.y, to: playerSprite.y + 10, yoyo: true, duration: 50 },
-      rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
-      ease: 'Power2',
-      paused: true
-    }).play();
+    if(action === 'keydown')
+    {
+      scene.tweens.add({
+        targets: tweenTarget,
+        scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+        scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+        positionY: { from: playerSprite.y, to: playerSprite.y - 10, yoyo: true, duration: 50 },
+        ease: 'Power2',
+        paused: true
+      }).play();
+    }else{    
+      scene.tweens.add({
+        targets: tweenTarget,
+        scaleX: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+        scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+        positionY: { from: playerSprite.y, to: playerSprite.y + 10, yoyo: true, duration: 50 },
+        ease: 'Power2',
+        paused: true
+      }).play();
+    }
+
+    
 
     return;
   }

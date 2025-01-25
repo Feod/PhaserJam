@@ -122,7 +122,11 @@ function create() {
   this.input.keyboard.on('keydown-X', () => handlePlayerInput(2, 'keydown'));
   this.input.keyboard.on('keyup-X', () => handlePlayerInput(2, 'keyup'));
 
-  plopSound = this.sound.add('plop');
+  plopSound = [
+    this.sound.add('plop-0'),
+    this.sound.add('plop-1'),
+    this.sound.add('plop-2')
+  ];
   grandpaAPullFromWaterSound = this.sound.add('grandpaA-pull-from-water');
   grandpaBPullFromWaterSound = this.sound.add('grandpaB-pull-from-water');
   outOfWaterSplashSounds = [

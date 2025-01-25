@@ -278,7 +278,7 @@ function handlePlayerInput(player, action, scene) {
         targets: tweenTarget,
         scaleX: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
         scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
-        y: { from: playerSprite.y, to: playerSprite.y - 50, yoyo: true, duration: 20 },
+        y: { from: playerSprite.y, to: playerSprite.y - 20, yoyo: true, duration: 40 },
         ease: 'Power2',
         paused: true
       }).play();

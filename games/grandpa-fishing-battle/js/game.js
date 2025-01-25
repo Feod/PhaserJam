@@ -37,6 +37,7 @@ let player2ShowLootTime = 0;
 let weather = 'sunny';
 let weatherTimer = 0;
 let matchStarted = false;
+let matchFinished = false;
 let matchTimer = 120; // 2 minutes in seconds
 let player1FishCount = 0;
 let player2FishCount = 0;
@@ -251,6 +252,7 @@ function handlePlayerInput(player, action, scene) {
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;
         waitingForMatchStart = false;
+        matchFinished = false;
         matchTimer = 1200;
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
       }
@@ -497,6 +499,7 @@ function changeWeather() {
 
 const endMatch = function () {
   matchStarted = false;
+  matchFinished = true;
   waitingForMatchStart = true;
   let winner;
   if (player1FishCount > player2FishCount) {
@@ -533,6 +536,7 @@ const endMatch = function () {
     .setVisible(true);
 
   playAgainButton.on('pointerdown', () => {
+    matchFinished = false;
     this.scene.restart(); // Restart the scene
   });
 }

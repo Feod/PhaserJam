@@ -356,8 +356,8 @@ const endMatch = () => {
     winner = 'No one';
   }
 
-  const winnerText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, `${winner} wins!`, { fontSize: '32px', fill: '#fff' });
-  winnerText.setOrigin(0.5);
+  //const winnerText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, `${winner} wins!`, { fontSize: '32px', fill: '#fff' });
+  //winnerText.setOrigin(0.5);
 
   const playAgainButton = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'play-again')
     .setInteractive()

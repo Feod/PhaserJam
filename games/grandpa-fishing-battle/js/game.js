@@ -56,11 +56,8 @@ function preload() {
   this.load.spritesheet('granpaA_fishing', 'assets/granpaA_fishing.png', { frameWidth: 1024, frameHeight: 1024 });
   this.load.spritesheet('granpaA_results', 'assets/granpaA_results.png', { frameWidth: 1024, frameHeight: 1024 });
 
-  this.load.image('grandpa2-idle', 'assets/grandpa2-idle.png');
-  this.load.image('grandpa2-rod-in-water', 'assets/grandpa2-rod-in-water.png');
-  this.load.image('grandpa2-pulling-rod-out', 'assets/grandpa2-pulling-rod-out.png');
-  this.load.image('grandpa2-pull-finish-no-fish', 'assets/grandpa2-pull-finish-no-fish.png');
-  this.load.image('grandpa2-pull-finish-YAY-FISH', 'assets/grandpa2-pull-finish-YAY-FISH.png');
+  this.load.spritesheet('granpaB_fishing', 'assets/granpaB_fishing.png', { frameWidth: 1024, frameHeight: 1024 });
+  this.load.spritesheet('granpaB_results', 'assets/granpaB_results.png', { frameWidth: 1024, frameHeight: 1024 });
 
   this.load.image('button', 'assets/button.png');
   this.load.image('play-again', 'assets/play-again.png');

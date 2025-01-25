@@ -41,6 +41,9 @@ let player2FishCount = 0;
 
 let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel;
 
+const anticipationFrames = 30;
+const cooldownFrames = 60;
+
 function preload() {
   this.load.image('grandpa1-idle', 'assets/grandpa1-idle.png');
   this.load.image('grandpa1-rod-in-water', 'assets/grandpa1-rod-in-water.png');
@@ -69,53 +72,10 @@ function create() {
     .setInteractive()
     .setOrigin(0.5);
 
-  player1Button.on('pointerdown', () => {
-    if (player1State === 'idle' && player1Cooldown === 0) {
-      player1State = 'rod-in-water';
-      player1.setTexture('grandpa1-rod-in-water');
-      player1RodTime = 0;
-      if (player2State === 'rod-in-water' && !matchStarted) {
-        matchStarted = true;
-      }
-    } else if (player1State === 'rod-in-water') {
-      player1State = 'pulling-rod-out';
-      player1Anticipation = 30; // 30 frames anticipation
-    } else if (player1State === 'pulling-rod-out') {
-      player1State = 'idle';
-      player1.setTexture('grandpa1-idle');
-    }
-  });
-
-  player1Button.on('pointerup', () => {
-    if (player1State === 'pulling-rod-out' && player1Anticipation > 0) {
-      player1State = 'rod-in-water';
-      player1.setTexture('grandpa1-rod-in-water');
-    }
-  });
-
-  player2Button.on('pointerdown', () => {
-    if (player2State === 'idle' && player2Cooldown === 0) {
-      player2State = 'rod-in-water';
-      player2.setTexture('grandpa2-rod-in-water');
-      player2RodTime = 0;
-      if (player1State === 'rod-in-water' && !matchStarted) {
-        matchStarted = true;
-      }
-    } else if (player2State === 'rod-in-water') {
-      player2State = 'pulling-rod-out';
-      player2Anticipation = 30; // 30 frames anticipation
-    } else if (player2State === 'pulling-rod-out') {
-      player2State = 'idle';
-      player2.setTexture('grandpa2-idle');
-    }
-  });
-
-  player2Button.on('pointerup', () => {
-    if (player2State === 'pulling-rod-out' && player2Anticipation > 0) {
-      player2State = 'rod-in-water';
-      player2.setTexture('grandpa2-rod-in-water');
-    }
-  });
+  player1Button.on('pointerdown', () => handlePlayerInput(1, 'pointerdown'));
+  player1Button.on('pointerup', () => handlePlayerInput(1, 'pointerup'));
+  player2Button.on('pointerdown', () => handlePlayerInput(2, 'pointerdown'));
+  player2Button.on('pointerup', () => handlePlayerInput(2, 'pointerup'));
 
   // Add debug labels
   player1StateLabel = this.add.text(16, 16, 'Player 1 State: ' + player1State, { fontSize: '16px', fill: '#fff' });
@@ -124,39 +84,8 @@ function create() {
   matchTimerLabel = this.add.text(16, 76, 'Match Time: ' + matchTimer, { fontSize: '16px', fill: '#fff' });
 
   // Add key bindings
-  this.input.keyboard.on('keydown-Z', () => {
-    if (player1State === 'idle' && player1Cooldown === 0) {
-      player1State = 'rod-in-water';
-      player1.setTexture('grandpa1-rod-in-water');
-      player1RodTime = 0;
-      if (player2State === 'rod-in-water' && !matchStarted) {
-        matchStarted = true;
-      }
-    } else if (player1State === 'rod-in-water') {
-      player1State = 'pulling-rod-out';
-      player1Anticipation = 30; // 30 frames anticipation
-    } else if (player1State === 'pulling-rod-out') {
-      player1State = 'idle';
-      player1.setTexture('grandpa1-idle');
-    }
-  });
-
-  this.input.keyboard.on('keydown-X', () => {
-    if (player2State === 'idle' && player2Cooldown === 0) {
-      player2State = 'rod-in-water';
-      player2.setTexture('grandpa2-rod-in-water');
-      player2RodTime = 0;
-      if (player1State === 'rod-in-water' && !matchStarted) {
-        matchStarted = true;
-      }
-    } else if (player2State === 'rod-in-water') {
-      player2State = 'pulling-rod-out';
-      player2Anticipation = 30; // 30 frames anticipation
-    } else if (player2State === 'pulling-rod-out') {
-      player2State = 'idle';
-      player2.setTexture('grandpa2-idle');
-    }
-  });
+  this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown'));
+  this.input.keyboard.on('keydown-X', () => handlePlayerInput(2, 'keydown'));
 }
 
 function update() {
@@ -167,57 +96,8 @@ function update() {
     }
   }
 
-  if (player1State === 'rod-in-water') {
-    player1RodTime++;
-  }
-
-  if (player2State === 'rod-in-water') {
-    player2RodTime++;
-  }
-
-  if (player1State === 'pulling-rod-out' && player1Anticipation > 0) {
-    player1Anticipation--;
-    if (player1Anticipation === 0) {
-      player1State = 'pull-finish';
-      const hasFish = checkFishCatch(player1RodTime);
-      player1.setTexture(hasFish ? 'grandpa1-pull-finish-YAY-FISH' : 'grandpa1-pull-finish-no-fish');
-      player1Cooldown = 60; // 60 frames cooldown
-      if (hasFish) {
-        player1FishCount++;
-      }
-    }
-  }
-
-  if (player2State === 'pulling-rod-out' && player2Anticipation > 0) {
-    player2Anticipation--;
-    if (player2Anticipation === 0) {
-      player2State = 'pull-finish';
-      const hasFish = checkFishCatch(player2RodTime);
-      player2.setTexture(hasFish ? 'grandpa2-pull-finish-YAY-FISH' : 'grandpa2-pull-finish-no-fish');
-      player2Cooldown = 60; // 60 frames cooldown
-      if (hasFish) {
-        player2FishCount++;
-      }
-    }
-  }
-
-  if (player1State === 'pull-finish') {
-    player1State = 'idle';
-    player1.setTexture('grandpa1-idle');
-  }
-
-  if (player2State === 'pull-finish') {
-    player2State = 'idle';
-    player2.setTexture('grandpa2-idle');
-  }
-
-  if (player1Cooldown > 0) {
-    player1Cooldown--;
-  }
-
-  if (player2Cooldown > 0) {
-    player2Cooldown--;
-  }
+  updatePlayerState(1);
+  updatePlayerState(2);
 
   weatherTimer++;
   if (weatherTimer > Phaser.Math.Between(600, 900)) { // 10-15 seconds at 60fps
@@ -230,6 +110,130 @@ function update() {
   player2StateLabel.setText('Player 2 State: ' + player2State);
   weatherLabel.setText('Weather: ' + weather);
   matchTimerLabel.setText('Match Time: ' + matchTimer);
+}
+
+function handlePlayerInput(player, action) {
+  let playerState, playerCooldown, playerRodTime, playerAnticipation, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
+
+  if (player === 1) {
+    playerState = player1State;
+    playerCooldown = player1Cooldown;
+    playerRodTime = player1RodTime;
+    playerAnticipation = player1Anticipation;
+    playerSprite = player1;
+    playerIdleTexture = 'grandpa1-idle';
+    playerRodInWaterTexture = 'grandpa1-rod-in-water';
+    playerPullingRodOutTexture = 'grandpa1-pulling-rod-out';
+  } else {
+    playerState = player2State;
+    playerCooldown = player2Cooldown;
+    playerRodTime = player2RodTime;
+    playerAnticipation = player2Anticipation;
+    playerSprite = player2;
+    playerIdleTexture = 'grandpa2-idle';
+    playerRodInWaterTexture = 'grandpa2-rod-in-water';
+    playerPullingRodOutTexture = 'grandpa2-pulling-rod-out';
+  }
+
+  if (action === 'pointerdown' || action === 'keydown') {
+    if (playerState === 'idle' && playerCooldown === 0) {
+      playerState = 'rod-in-water';
+      playerSprite.setTexture(playerRodInWaterTexture);
+      playerRodTime = 0;
+      if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
+        matchStarted = true;
+      }
+    } else if (playerState === 'rod-in-water') {
+      playerState = 'pulling-rod-out';
+      playerAnticipation = anticipationFrames;
+    } else if (playerState === 'pulling-rod-out') {
+      playerState = 'idle';
+      playerSprite.setTexture(playerIdleTexture);
+    }
+  } else if (action === 'pointerup') {
+    if (playerState === 'pulling-rod-out' && playerAnticipation > 0) {
+      playerState = 'rod-in-water';
+      playerSprite.setTexture(playerRodInWaterTexture);
+    }
+  }
+
+  if (player === 1) {
+    player1State = playerState;
+    player1Cooldown = playerCooldown;
+    player1RodTime = playerRodTime;
+    player1Anticipation = playerAnticipation;
+  } else {
+    player2State = playerState;
+    player2Cooldown = playerCooldown;
+    player2RodTime = playerRodTime;
+    player2Anticipation = playerAnticipation;
+  }
+}
+
+function updatePlayerState(player) {
+  let playerState, playerAnticipation, playerRodTime, playerCooldown, playerSprite, playerIdleTexture, playerPullFinishNoFishTexture, playerPullFinishYayFishTexture, playerFishCount;
+
+  if (player === 1) {
+    playerState = player1State;
+    playerAnticipation = player1Anticipation;
+    playerRodTime = player1RodTime;
+    playerCooldown = player1Cooldown;
+    playerSprite = player1;
+    playerIdleTexture = 'grandpa1-idle';
+    playerPullFinishNoFishTexture = 'grandpa1-pull-finish-no-fish';
+    playerPullFinishYayFishTexture = 'grandpa1-pull-finish-YAY-FISH';
+    playerFishCount = player1FishCount;
+  } else {
+    playerState = player2State;
+    playerAnticipation = player2Anticipation;
+    playerRodTime = player2RodTime;
+    playerCooldown = player2Cooldown;
+    playerSprite = player2;
+    playerIdleTexture = 'grandpa2-idle';
+    playerPullFinishNoFishTexture = 'grandpa2-pull-finish-no-fish';
+    playerPullFinishYayFishTexture = 'grandpa2-pull-finish-YAY-FISH';
+    playerFishCount = player2FishCount;
+  }
+
+  if (playerState === 'rod-in-water') {
+    playerRodTime++;
+  }
+
+  if (playerState === 'pulling-rod-out' && playerAnticipation > 0) {
+    playerAnticipation--;
+    if (playerAnticipation === 0) {
+      playerState = 'pull-finish';
+      const hasFish = checkFishCatch(playerRodTime);
+      playerSprite.setTexture(hasFish ? playerPullFinishYayFishTexture : playerPullFinishNoFishTexture);
+      playerCooldown = cooldownFrames;
+      if (hasFish) {
+        playerFishCount++;
+      }
+    }
+  }
+
+  if (playerState === 'pull-finish') {
+    playerState = 'idle';
+    playerSprite.setTexture(playerIdleTexture);
+  }
+
+  if (playerCooldown > 0) {
+    playerCooldown--;
+  }
+
+  if (player === 1) {
+    player1State = playerState;
+    player1Anticipation = playerAnticipation;
+    player1RodTime = playerRodTime;
+    player1Cooldown = playerCooldown;
+    player1FishCount = playerFishCount;
+  } else {
+    player2State = playerState;
+    player2Anticipation = playerAnticipation;
+    player2RodTime = playerRodTime;
+    player2Cooldown = playerCooldown;
+    player2FishCount = playerFishCount;
+  }
 }
 
 function checkFishCatch(rodTime) {

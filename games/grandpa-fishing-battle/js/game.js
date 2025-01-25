@@ -195,7 +195,7 @@ function handlePlayerInput(player, action) {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture, 1);
       playerRodTime = 0;
-      const randomPlopSound = Phaser.Math.Between(0, 2);
+      const randomPlopSound = Phaser.Math.Between(0, plopSound.length - 1);
       plopSound[randomPlopSound].play();
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;

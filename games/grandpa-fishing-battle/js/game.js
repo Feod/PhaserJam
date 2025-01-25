@@ -182,6 +182,16 @@ function handlePlayerInput(player, action, scene) {
   let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
 
   if (player === 1) {
+
+    scene.tweens.add({
+      targets: [player1],
+      scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+      scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+      rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+      ease: 'Power2',
+      paused: true
+    }).play();
+
     playerState = player1State;
     playerCooldown = player1Cooldown;
     playerRodTime = player1RodTime;
@@ -192,6 +202,16 @@ function handlePlayerInput(player, action, scene) {
     playerRodInWaterTexture = 'granpaA_fishing';
     playerPullingRodOutTexture = 'granpaA_fishing';
   } else {
+
+    scene.tweens.add({
+      targets: [player2],
+      scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+      scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+      rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+      ease: 'Power2',
+      paused: true
+    }).play();
+
     playerState = player2State;
     playerCooldown = player2Cooldown;
     playerRodTime = player2RodTime;
@@ -224,14 +244,14 @@ function handlePlayerInput(player, action, scene) {
       //  grandpaTween.play();
       //}
 
-      scene.tweens.add({
-        targets: [player1, player2],
-        scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 100 },
-        scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 200 },
-        rotation: { from: 0, to: 0.1, yoyo: true, duration: 300 },
-        ease: 'Power2',
-        paused: true
-      }).play();
+      //scene.tweens.add({
+      //  targets: [player1, player2],
+      //  scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 100 },
+      //  scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 200 },
+      //  rotation: { from: 0, to: 0.1, yoyo: true, duration: 300 },
+      //  ease: 'Power2',
+      //  paused: true
+      //}).play();
 
       
     } else if (playerState === 'pulling-rod-out') {

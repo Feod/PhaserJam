@@ -66,7 +66,7 @@ function preload() {
 
   this.load.image('button', 'assets/button.png');
   this.load.image('play-again', 'assets/play-again.png');
-
+  this.load.spritesheet('lure', 'assets/lure.png', { frameWidth: 512, frameHeight: 512 });
 
   //Use random plop each time
   this.load.audio('plop-0', 'assets/sfx/plop.wav');
@@ -152,6 +152,20 @@ function create() {
     ease: 'Power2',
     paused: true
   });
+
+  // Add lure sprites for each player and scale them to 1/4 size
+  const lure1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY + 50, 'lure');
+  lure1.setScale(0.25);
+  const lure2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY + 50, 'lure');
+  lure2.setScale(0.25);
+
+  // Hide lures initially
+  lure1.setVisible(false);
+  lure2.setVisible(false);
+
+  // Store lures in player objects
+  player1.lure = lure1;
+  player2.lure = lure2;
 }
 
 function update() {
@@ -190,7 +204,7 @@ function handlePlayerInput(player, action, scene) {
 
   if (!matchStarted && !waitingForMatchStart) return; // Disable player input when match ends and not waiting for match start
 
-  let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
+  let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture, playerLure;
 
   let tweenTarget;
 
@@ -208,6 +222,7 @@ function handlePlayerInput(player, action, scene) {
     playerIdleTexture = 'granpaA_fishing';
     playerRodInWaterTexture = 'granpaA_fishing';
     playerPullingRodOutTexture = 'granpaA_fishing';
+    playerLure = player1.lure;
   } else {
 
     tweenTarget = player2;
@@ -230,6 +245,7 @@ function handlePlayerInput(player, action, scene) {
     playerIdleTexture = 'granpaB_fishing';
     playerRodInWaterTexture = 'granpaB_fishing';
     playerPullingRodOutTexture = 'granpaB_fishing';
+    playerLure = player2.lure;
   }
 
   if (action === 'pointerdown' || action === 'keydown') {
@@ -256,6 +272,9 @@ function handlePlayerInput(player, action, scene) {
         matchTimer = 1200;
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
       }
+
+      // Show lure
+      playerLure.setVisible(true);
 
       // Play tween animation for grandpa's scale and rotation
       //if (grandpaTween.isPlaying()) {
@@ -289,6 +308,9 @@ function handlePlayerInput(player, action, scene) {
       playerSprite.setTexture(playerRodInWaterTexture, 1);
       const randomPlopSound = Phaser.Math.Between(0, 2);
       plopSound[randomPlopSound].play();
+
+      // Show lure
+      playerLure.setVisible(true);
     }else if(playerCooldown > 0){
       //Give some sort of tiny animation as a feedback
       scene.tweens.add({
@@ -323,6 +345,9 @@ function handlePlayerInput(player, action, scene) {
       }
       const randomSplashSound = Phaser.Math.Between(0, 2);
       outOfWaterSplashSounds[randomSplashSound].play();
+
+      // Show lure
+      playerLure.setVisible(true);
     }
   }
 
@@ -342,7 +367,7 @@ function handlePlayerInput(player, action, scene) {
 }
 
 function updatePlayerState(player, scene) {
-  let playerState, playerAnticipation, playerRodTime, playerCooldown, playerShowLootTime, playerSprite, playerIdleTexture, playerPullFinishNoFishTexture, playerPullFinishYayFishTexture, playerFishCount, gotFish;
+  let playerState, playerAnticipation, playerRodTime, playerCooldown, playerShowLootTime, playerSprite, playerIdleTexture, playerPullFinishNoFishTexture, playerPullFinishYayFishTexture, playerFishCount, gotFish, playerLure;
   let tweenTarget;
 
   if (player === 1) {
@@ -359,6 +384,7 @@ function updatePlayerState(player, scene) {
     playerPullFinishNoFishTexture = 'granpaA_results';
     playerPullFinishYayFishTexture = 'granpaA_results';
     playerFishCount = player1FishCount;
+    playerLure = player1.lure;
   } else {
     tweenTarget = player2;
     gotFish = player2GotFish;
@@ -373,6 +399,7 @@ function updatePlayerState(player, scene) {
     playerPullFinishNoFishTexture = 'granpaB_results';
     playerPullFinishYayFishTexture = 'granpaB_results';
     playerFishCount = player2FishCount;
+    playerLure = player2.lure;
   }
 
   if (playerState === 'rod-in-water') {
@@ -438,6 +465,9 @@ function updatePlayerState(player, scene) {
   
       playerState = 'show-loot';
       playerShowLootTime = showLootFrames;
+
+      // Hide lure
+      playerLure.setVisible(false);
 
     }else{
       playerState = 'idle';

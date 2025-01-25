@@ -94,8 +94,8 @@ function create() {
   player2 = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'granpaB_fishing', 0);
 
   // Scale down player1 by 1/4
-  player1.setScale(0.25); // P5b59
-  player2.setScale(0.25); // Pdcb6
+  player1.setScale(0.25);
+  player2.setScale(0.25);
 
   player1Button = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 150, 'button')
     .setInteractive()
@@ -137,6 +137,16 @@ function create() {
   grandpaBHappySound = this.sound.add('grandpaB-happy');
   grandpaASadSound = this.sound.add('grandpaA-sad');
   grandpaBSadSound = this.sound.add('grandpaB-sad');
+
+  // Add tween animation for grandpa's scale and rotation
+  this.tweens.add({
+    targets: [player1, player2],
+    scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 300 },
+    scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 400 },
+    rotation: { from: 0, to: 0.1, yoyo: true }, // rotation doesn't have duration. Is that a problem?
+    ease: 'Power2',
+    paused: true
+  });
 }
 
 function update() {
@@ -204,6 +214,9 @@ function handlePlayerInput(player, action) {
         matchTimer = 120; // Reset match timer to 120 seconds
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
       }
+
+      // Play tween animation for grandpa's scale and rotation
+      this.tweens.getTweensOf(playerSprite)[0].play();
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture, 1);

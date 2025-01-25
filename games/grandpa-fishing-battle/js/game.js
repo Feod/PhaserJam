@@ -68,7 +68,7 @@ function preload() {
   //Use random plop each time
   this.load.audio('plop-0', 'assets/sfx/plop.wav');
   this.load.audio('plop-1', 'assets/sfx/rodouttawater7.wav');
-  this.load.audio('plop-2', 'assets/sfx/rodouttawater6.wav');
+  this.load.audio('plop-2', 'assets/sfx/rodouttawater6_outplop.wav');
 
   this.load.audio('grandpaA-pull-from-water', 'assets/sfx/rodouttawater2_maybetoocomedicandnotwetenough.wav');
   this.load.audio('grandpaB-pull-from-water', 'assets/sfx/rodouttawater1.wav');

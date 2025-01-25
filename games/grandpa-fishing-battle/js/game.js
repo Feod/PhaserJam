@@ -145,7 +145,7 @@ function update() {
     matchTimer--;
     if (matchTimer <= 0) {
       matchTimer = 0;
-      endMatch();
+      endMatch.call(this); // Bind the function to the Scene
     }
   }
 
@@ -345,7 +345,8 @@ function changeWeather() {
   weather = weathers[Phaser.Math.Between(0, weathers.length - 1)];
 }
 
-const endMatch = () => {
+
+const endMatch = function () {
   matchStarted = false;
   let winner;
   if (player1FishCount > player2FishCount) {
@@ -356,15 +357,27 @@ const endMatch = () => {
     winner = 'No one';
   }
 
-  //const winnerText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, `${winner} wins!`, { fontSize: '32px', fill: '#fff' });
-  //winnerText.setOrigin(0.5);
+  // Add winner text
+  const winnerText = this.add.text(
+    this.cameras.main.centerX,
+    this.cameras.main.centerY - 100,
+    `${winner} wins!`,
+    { fontSize: '32px', fill: '#fff' }
+  );
+  winnerText.setOrigin(0.5);
 
-  const playAgainButton = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'play-again')
+  // Add "Play Again" button
+  const playAgainButton = this.add.sprite(
+    this.cameras.main.centerX,
+    this.cameras.main.centerY,
+    'play-again'
+  )
     .setInteractive()
     .setOrigin(0.5)
     .setVisible(true);
 
   playAgainButton.on('pointerdown', () => {
-    this.scene.restart();
+    this.scene.restart(); // Restart the scene
   });
 }
+

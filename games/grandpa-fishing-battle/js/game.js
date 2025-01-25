@@ -287,7 +287,7 @@ function handlePlayerInput(player, action, scene) {
       playerSprite.setTexture(playerRodInWaterTexture, 1);
       const randomPlopSound = Phaser.Math.Between(0, 2);
       plopSound[randomPlopSound].play();
-    }else{
+    }else if(playerCooldown > 0){
       //Give some sort of tiny animation as a feedback
       scene.tweens.add({
         targets: tweenTarget,

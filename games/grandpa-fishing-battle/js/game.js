@@ -193,14 +193,12 @@ function update() {
   matchTimerLabel.setText('Match Time: ' + matchTimer);
 }
 
-let inputCooldown = false;
+let inputCooldownP1 = false;
+let inputCooldownP2 = false;
+
 function handlePlayerInput(player, action, scene) {
 
-  if (inputCooldown) return;
-  inputCooldown = true;
-  setTimeout(() => (inputCooldown = false), 10); // 200ms cooldown
-  // Your existing input handling logic here...
-
+  
 
   if (!matchStarted && !waitingForMatchStart) return; // Disable player input when match ends and not waiting for match start
 
@@ -210,9 +208,12 @@ function handlePlayerInput(player, action, scene) {
 
   if (player === 1) {
 
+    if (inputCooldownP1) return;
+    inputCooldownP1 = true;
+    setTimeout(() => (inputCooldownP1 = false), 10); // 200ms cooldown
+    
     tweenTarget = player1;
 
-    
     playerState = player1State;
     playerCooldown = player1Cooldown;
     playerRodTime = player1RodTime;
@@ -227,15 +228,6 @@ function handlePlayerInput(player, action, scene) {
 
     tweenTarget = player2;
 
-    scene.tweens.add({
-      targets: [player2],
-      scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
-      scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
-      rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
-      ease: 'Power2',
-      paused: true
-    }).play();
-
     playerState = player2State;
     playerCooldown = player2Cooldown;
     playerRodTime = player2RodTime;
@@ -246,6 +238,21 @@ function handlePlayerInput(player, action, scene) {
     playerRodInWaterTexture = 'granpaB_fishing';
     playerPullingRodOutTexture = 'granpaB_fishing';
     playerLure = player2.lure;
+  }
+
+  if(matchFinished){
+    
+    scene.tweens.add({
+      targets: tweenTarget,
+      scaleX: { from: 0.25, to: 0.32, yoyo: true, duration: 50 },
+      scaleY: { from: 0.25, to: 0.28, yoyo: true, duration: 50 },
+      positionY: { from: playerSprite.y, to: playerSprite.y + 10, yoyo: true, duration: 50 },
+      rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+      ease: 'Power2',
+      paused: true
+    }).play();
+
+    return;
   }
 
   if (action === 'pointerdown' || action === 'keydown') {
@@ -367,6 +374,9 @@ function handlePlayerInput(player, action, scene) {
 }
 
 function updatePlayerState(player, scene) {
+
+  if(matchFinished) return;
+
   let playerState, playerAnticipation, playerRodTime, playerCooldown, playerShowLootTime, playerSprite, playerIdleTexture, playerPullFinishNoFishTexture, playerPullFinishYayFishTexture, playerFishCount, gotFish, playerLure;
   let tweenTarget;
 
@@ -466,14 +476,14 @@ function updatePlayerState(player, scene) {
       playerState = 'show-loot';
       playerShowLootTime = showLootFrames;
 
-      // Hide lure
-      playerLure.setVisible(false);
-
     }else{
       playerState = 'idle';
       playerSprite.setTexture(playerIdleTexture, 0);
       playerCooldown = 0;
     }
+
+    // Hide lure
+    playerLure.setVisible(false);
     
   }
 

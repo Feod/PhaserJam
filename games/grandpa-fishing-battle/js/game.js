@@ -77,6 +77,9 @@ function create() {
   player1 = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'granpaA_fishing', 0);
   player2 = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'grandpa2-idle');
 
+  // Scale down player1 by 1/4
+  player1.setScale(0.25); // P5b59
+
   player1Button = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 150, 'button')
     .setInteractive()
     .setOrigin(0.5);
@@ -261,7 +264,7 @@ function updatePlayerState(player) {
     player1FishCount = playerFishCount;
   } else {
     player2State = playerState;
-    player2Anticipation = playerAnticipation;
+    player2Anticipation = player2Anticipation;
     player2RodTime = playerRodTime;
     player2Cooldown = playerCooldown;
     player2ShowLootTime = playerShowLootTime;

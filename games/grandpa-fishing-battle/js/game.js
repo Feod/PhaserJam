@@ -399,30 +399,38 @@ function updatePlayerState(player, scene) {
     }
   }
 
-  if (playerState === 'pull-finish') {
+  if (playerState === 'pull-finish' && matchStarted) {
 
-    if (gotFish) {
-      scene.tweens.add({
-        targets: tweenTarget,
-        scaleX: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
-        scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
-        rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
-        ease: 'Power2',
-        paused: true
-      }).play();
+    if(matchStarted){
+      
+      if (gotFish) {
+        scene.tweens.add({
+          targets: tweenTarget,
+          scaleX: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+          scaleY: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+          rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+          ease: 'Power2',
+          paused: true
+        }).play();
+      }else{
+        scene.tweens.add({
+          targets: tweenTarget,
+          scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
+          scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
+          rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+          ease: 'Power2',
+          paused: true
+        }).play();
+      }
+  
+      playerState = 'show-loot';
+      playerShowLootTime = showLootFrames;
+
     }else{
-      scene.tweens.add({
-        targets: tweenTarget,
-        scaleX: { from: 0.25, to: 0.3, yoyo: true, duration: 50 },
-        scaleY: { from: 0.25, to: 0.2, yoyo: true, duration: 50 },
-        rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
-        ease: 'Power2',
-        paused: true
-      }).play();
+      playerState = 'idle';
+      playerSprite.setTexture(playerIdleTexture, 0);
     }
-
-    playerState = 'show-loot';
-    playerShowLootTime = showLootFrames;
+    
   }
 
   if (playerState === 'show-loot') {

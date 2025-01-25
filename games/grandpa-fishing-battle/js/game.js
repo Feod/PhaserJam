@@ -78,7 +78,7 @@ function preload() {
   this.load.audio('out-of-water-splash-1', 'assets/sfx/rodouttawater9.wav');
   this.load.audio('out-of-water-splash-2', 'assets/sfx/rodouttawater8.wav');
 
-  this.load.audio('grandpaA-happy', 'assets/sfx/grandpahappy08.wav');
+  this.load.audio('grandpaA-happy', 'assets/sfx/grandpahappy07.wav');
   this.load.audio('grandpaB-happy', 'assets/sfx/grandpahappy09.wav');
   this.load.audio('grandpaA-sad', 'assets/sfx/sadgrandpa09.wav');
   this.load.audio('grandpaB-sad', 'assets/sfx/sadgrandpa08.wav');

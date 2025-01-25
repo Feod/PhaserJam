@@ -659,4 +659,14 @@ const endMatch = function () {
     matchFinished = false;
     this.scene.restart(); // Restart the scene
   });
+
+  // Add screen flash effect
+  this.cameras.main.flash(500, 255, 255, 255);
+
+  // Add zooming camera effect
+  this.cameras.main.zoomTo(1.5, 1000);
+
+  // Hide lures instead of removing them
+  SetLureVisible(player1.lure, false, this);
+  SetLureVisible(player2.lure, false, this);
 }

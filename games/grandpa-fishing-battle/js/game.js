@@ -98,6 +98,8 @@ function create() {
   background.displayWidth = this.sys.game.config.width;
   background.displayHeight = this.sys.game.config.height;
 
+  setBackgroundTint.call(this, weather); // Set initial background tint based on weather
+
   player1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY-100, 'granpaA_fishing', 0);
   player2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY-100, 'granpaB_fishing', 0);
 
@@ -202,7 +204,7 @@ function update() {
 
   weatherTimer++;
   if (weatherTimer > Phaser.Math.Between(600, 900)) { // 10-15 seconds at 60fps
-    changeWeather();
+    changeWeather.call(this);
     weatherTimer = 0;
   }
 
@@ -591,8 +593,28 @@ function checkFishCatch(rodTime) {
 function changeWeather() {
   const weathers = ['sunny', 'cloudy', 'rainbows', 'winter'];
   weather = weathers[Phaser.Math.Between(0, weathers.length - 1)];
+  setBackgroundTint.call(this, weather); // Update background tint when weather changes
 }
 
+function setBackgroundTint(weather) {
+  const background = this.children.getByName('background');
+  switch (weather) {
+    case 'sunny':
+      background.setTint(0xffffff); // No tint
+      break;
+    case 'cloudy':
+      background.setTint(0x808080); // Gray tint
+      break;
+    case 'rainbows':
+      background.setTint(0xff69b4); // Pink tint
+      break;
+    case 'winter':
+      background.setTint(0xadd8e6); // Light blue tint
+      break;
+    default:
+      background.setTint(0xffffff); // No tint
+  }
+}
 
 const endMatch = function () {
   matchStarted = false;

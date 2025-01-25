@@ -39,12 +39,14 @@ let matchTimer = 120; // 2 minutes in seconds
 let player1FishCount = 0;
 let player2FishCount = 0;
 
+let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel;
+
 function preload() {
   this.load.image('grandpa1-idle', 'assets/grandpa1-idle.png');
   this.load.image('grandpa1-rod-in-water', 'assets/grandpa1-rod-in-water.png');
   this.load.image('grandpa1-pulling-rod-out', 'assets/grandpa1-pulling-rod-out.png');
   this.load.image('grandpa1-pull-finish-no-fish', 'assets/grandpa1-pull-finish-no-fish.png');
-  this.load.image('grandpa1-pull-finish-YAY-FISH', 'assets/grandpa1-pull-finish-YAY-FISH.png');
+  this.load.image('grandpa1-pull-finish-YAY-FISH', 'assets/grandpa1-pull-finish-YAY-FISH', 'assets/grandpa1-pull-finish-YAY-FISH.png');
 
   this.load.image('grandpa2-idle', 'assets/grandpa2-idle.png');
   this.load.image('grandpa2-rod-in-water', 'assets/grandpa2-rod-in-water.png');
@@ -114,6 +116,47 @@ function create() {
       player2.setTexture('grandpa2-rod-in-water');
     }
   });
+
+  // Add debug labels
+  player1StateLabel = this.add.text(16, 16, 'Player 1 State: ' + player1State, { fontSize: '16px', fill: '#fff' });
+  player2StateLabel = this.add.text(16, 36, 'Player 2 State: ' + player2State, { fontSize: '16px', fill: '#fff' });
+  weatherLabel = this.add.text(16, 56, 'Weather: ' + weather, { fontSize: '16px', fill: '#fff' });
+  matchTimerLabel = this.add.text(16, 76, 'Match Time: ' + matchTimer, { fontSize: '16px', fill: '#fff' });
+
+  // Add key bindings
+  this.input.keyboard.on('keydown-Z', () => {
+    if (player1State === 'idle' && player1Cooldown === 0) {
+      player1State = 'rod-in-water';
+      player1.setTexture('grandpa1-rod-in-water');
+      player1RodTime = 0;
+      if (player2State === 'rod-in-water' && !matchStarted) {
+        matchStarted = true;
+      }
+    } else if (player1State === 'rod-in-water') {
+      player1State = 'pulling-rod-out';
+      player1Anticipation = 30; // 30 frames anticipation
+    } else if (player1State === 'pulling-rod-out') {
+      player1State = 'idle';
+      player1.setTexture('grandpa1-idle');
+    }
+  });
+
+  this.input.keyboard.on('keydown-X', () => {
+    if (player2State === 'idle' && player2Cooldown === 0) {
+      player2State = 'rod-in-water';
+      player2.setTexture('grandpa2-rod-in-water');
+      player2RodTime = 0;
+      if (player1State === 'rod-in-water' && !matchStarted) {
+        matchStarted = true;
+      }
+    } else if (player2State === 'rod-in-water') {
+      player2State = 'pulling-rod-out';
+      player2Anticipation = 30; // 30 frames anticipation
+    } else if (player2State === 'pulling-rod-out') {
+      player2State = 'idle';
+      player2.setTexture('grandpa2-idle');
+    }
+  });
 }
 
 function update() {
@@ -181,6 +224,12 @@ function update() {
     changeWeather();
     weatherTimer = 0;
   }
+
+  // Update debug labels
+  player1StateLabel.setText('Player 1 State: ' + player1State);
+  player2StateLabel.setText('Player 2 State: ' + player2State);
+  weatherLabel.setText('Weather: ' + weather);
+  matchTimerLabel.setText('Match Time: ' + matchTimer);
 }
 
 function checkFishCatch(rodTime) {

@@ -162,8 +162,8 @@ function update() {
     }
   }
 
-  updatePlayerState(1);
-  updatePlayerState(2);
+  updatePlayerState(1, this);
+  updatePlayerState(2, this);
 
   weatherTimer++;
   if (weatherTimer > Phaser.Math.Between(600, 900)) { // 10-15 seconds at 60fps
@@ -328,7 +328,7 @@ function handlePlayerInput(player, action, scene) {
   }
 }
 
-function updatePlayerState(player) {
+function updatePlayerState(player, scene) {
   let playerState, playerAnticipation, playerRodTime, playerCooldown, playerShowLootTime, playerSprite, playerIdleTexture, playerPullFinishNoFishTexture, playerPullFinishYayFishTexture, playerFishCount, gotFish;
   let tweenTarget;
 

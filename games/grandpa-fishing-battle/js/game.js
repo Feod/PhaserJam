@@ -106,10 +106,10 @@ function create() {
     .setInteractive()
     .setOrigin(0.5);
 
-  player1Button.on('pointerdown', () => handlePlayerInput(1, 'pointerdown'));
-  player1Button.on('pointerup', () => handlePlayerInput(1, 'pointerup'));
-  player2Button.on('pointerdown', () => handlePlayerInput(2, 'pointerdown'));
-  player2Button.on('pointerup', () => handlePlayerInput(2, 'pointerup'));
+  player1Button.on('pointerdown', () => handlePlayerInput(1, 'pointerdown', this));
+  player1Button.on('pointerup', () => handlePlayerInput(1, 'pointerup', this));
+  player2Button.on('pointerdown', () => handlePlayerInput(2, 'pointerdown', this));
+  player2Button.on('pointerup', () => handlePlayerInput(2, 'pointerup', this));
 
   // Add debug labels
   player1StateLabel = this.add.text(16, 16, 'Player 1 State: ' + player1State, { fontSize: '16px', fill: '#fff' });
@@ -118,10 +118,10 @@ function create() {
   matchTimerLabel = this.add.text(16, 76, 'Match Time: ' + matchTimer, { fontSize: '16px', fill: '#fff' });
 
   // Add key bindings
-  this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown'));
-  this.input.keyboard.on('keyup-Z', () => handlePlayerInput(1, 'keyup'));
-  this.input.keyboard.on('keydown-X', () => handlePlayerInput(2, 'keydown'));
-  this.input.keyboard.on('keyup-X', () => handlePlayerInput(2, 'keyup'));
+  this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown', this));
+  this.input.keyboard.on('keyup-Z', () => handlePlayerInput(1, 'keyup', this));
+  this.input.keyboard.on('keydown-X', () => handlePlayerInput(2, 'keydown', this));
+  this.input.keyboard.on('keyup-X', () => handlePlayerInput(2, 'keyup', this));
 
   plopSound = [
     this.sound.add('plop-0'),
@@ -176,7 +176,7 @@ function update() {
   matchTimerLabel.setText('Match Time: ' + matchTimer);
 }
 
-function handlePlayerInput(player, action) {
+function handlePlayerInput(player, action, scene) {
   if (!matchStarted && !waitingForMatchStart) return; // Disable player input when match ends and not waiting for match start
 
   let playerState, playerCooldown, playerRodTime, playerAnticipation, playerShowLootTime, playerSprite, playerIdleTexture, playerRodInWaterTexture, playerPullingRodOutTexture;
@@ -223,6 +223,7 @@ function handlePlayerInput(player, action) {
       } else {
         grandpaTween.play();
       }
+      
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture, 1);

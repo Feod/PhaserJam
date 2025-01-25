@@ -47,6 +47,8 @@ const anticipationFrames = 30;
 const cooldownFrames = 60;
 const showLootFrames = 90;
 
+let plopSound;
+
 function preload() {
   this.load.image('background', 'assets/background.png');
 
@@ -64,6 +66,8 @@ function preload() {
 
   this.load.image('button', 'assets/button.png');
   this.load.image('play-again', 'assets/play-again.png');
+
+  this.load.audio('plop', 'assets/plop.mp3');
 }
 
 function create() {
@@ -99,6 +103,8 @@ function create() {
   this.input.keyboard.on('keyup-Z', () => handlePlayerInput(1, 'keyup'));
   this.input.keyboard.on('keydown-X', () => handlePlayerInput(2, 'keydown'));
   this.input.keyboard.on('keyup-X', () => handlePlayerInput(2, 'keyup'));
+
+  plopSound = this.sound.add('plop');
 }
 
 function update() {
@@ -156,12 +162,14 @@ function handlePlayerInput(player, action) {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture);
       playerRodTime = 0;
+      plopSound.play();
       if ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
         matchStarted = true;
       }
     } else if (playerState === 'pulling-rod-out') {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture);
+      plopSound.play();
     }
   } else if (action === 'pointerup' || action === 'keyup') {
     if (playerState === 'rod-in-water') {

@@ -52,8 +52,8 @@ let player2GotFish = false;
 let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel;
 
 const anticipationFrames = 30;
-const cooldownFrames = 60;
-const showLootFrames = 90;
+const cooldownFrames = 40;
+const showLootFrames = 40;
 
 let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound;
 
@@ -115,8 +115,8 @@ function create() {
     .setInteractive()
     .setOrigin(0.5);
 
-  player1Button.on('pointerdown', () => handlePlayerInput(1, 'keydown', this));
-  player1Button.on('pointerup', () => handlePlayerInput(1, 'keyup', this));
+  player1Button.on('pointerup', () => handlePlayerInput(1, 'keydown', this));
+  player1Button.on('pointerdown', () => handlePlayerInput(1, 'keyup', this));
   player2Button.on('pointerdown', () => handlePlayerInput(2, 'keydown', this));
   player2Button.on('pointerup', () => handlePlayerInput(2, 'keyup', this));
 

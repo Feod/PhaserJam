@@ -399,7 +399,7 @@ function updatePlayerState(player, scene) {
     }
   }
 
-  if (playerState === 'pull-finish' && matchStarted) {
+  if (playerState === 'pull-finish') {
 
     if(matchStarted){
 

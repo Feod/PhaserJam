@@ -287,7 +287,18 @@ function handlePlayerInput(player, action, scene) {
       playerSprite.setTexture(playerRodInWaterTexture, 1);
       const randomPlopSound = Phaser.Math.Between(0, 2);
       plopSound[randomPlopSound].play();
+    }else{
+      //Give some sort of tiny animation as a feedback
+      scene.tweens.add({
+        targets: tweenTarget,
+        scaleX: { from: 0.25, to: 0.28, yoyo: true, duration: 50 },
+        scaleY: { from: 0.25, to: 0.24, yoyo: true, duration: 50 },
+        rotation: { from: 0, to: 0.1, yoyo: true, duration: 50 },
+        ease: 'Power2',
+        paused: true
+      }).play();
     }
+    
   } else if (action === 'pointerup' || action === 'keyup') {
     if (playerState === 'rod-in-water') {
       playerState = 'pulling-rod-out';
@@ -429,6 +440,7 @@ function updatePlayerState(player, scene) {
     }else{
       playerState = 'idle';
       playerSprite.setTexture(playerIdleTexture, 0);
+      playerCooldown = 0;
     }
     
   }

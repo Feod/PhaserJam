@@ -85,7 +85,9 @@ function create() {
 
   // Add key bindings
   this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown'));
+  this.input.keyboard.on('keyup-Z', () => handlePlayerInput(1, 'keyup'));
   this.input.keyboard.on('keydown-X', () => handlePlayerInput(2, 'keydown'));
+  this.input.keyboard.on('keyup-X', () => handlePlayerInput(2, 'keyup'));
 }
 
 function update() {
@@ -150,7 +152,7 @@ function handlePlayerInput(player, action) {
       playerState = 'idle';
       playerSprite.setTexture(playerIdleTexture);
     }
-  } else if (action === 'pointerup') {
+  } else if (action === 'pointerup' || action === 'keyup') {
     if (playerState === 'pulling-rod-out' && playerAnticipation > 0) {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture);
@@ -270,9 +272,10 @@ function endMatch() {
   const winnerText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, `${winner} wins!`, { fontSize: '32px', fill: '#fff' });
   winnerText.setOrigin(0.5);
 
-  const playAgainButton = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 100, 'play-again')
+  const playAgainButton = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 50, 'play-again')
     .setInteractive()
-    .setOrigin(0.5);
+    .setOrigin(0.5)
+    .setVisible(true);
 
   playAgainButton.on('pointerdown', () => {
     this.scene.restart();

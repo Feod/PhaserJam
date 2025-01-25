@@ -147,7 +147,11 @@ function handlePlayerInput(player, action) {
       }
     }
   } else if (action === 'pointerup' || action === 'keyup') {
-    if (playerState === 'pulling-rod-out' && playerAnticipation > 0) {
+    if (playerState === 'rod-in-water') {
+      playerState = 'pulling-rod-out';
+      playerSprite.setTexture(playerPullingRodOutTexture);
+      playerAnticipation = anticipationFrames;
+    } else if (playerState === 'pulling-rod-out' && playerAnticipation > 0) {
       playerState = 'rod-in-water';
       playerSprite.setTexture(playerRodInWaterTexture);
     }
@@ -195,7 +199,7 @@ function updatePlayerState(player) {
     playerRodTime++;
   }
 
-  if (playerState === 'pulling-rod-out' && playerAnticipation > 0) {
+  if (playerState === 'pulling-rod-out') {
     playerAnticipation--;
     if (playerAnticipation === 0) {
       playerState = 'pull-finish';

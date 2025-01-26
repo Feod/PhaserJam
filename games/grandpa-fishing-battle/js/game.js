@@ -227,7 +227,7 @@ function create() {
   player2.lure = lure2;
 
   this.p1key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-  this.p2key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+  this.p2key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
   // Add credits text object
   this.creditsText = this.add.text(

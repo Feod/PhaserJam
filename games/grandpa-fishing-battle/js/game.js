@@ -55,7 +55,7 @@ let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel;
 
 const anticipationFrames = 30;
 const cooldownFrames = 40;
-const showLootFrames = 40;
+const showLootFrames = 70;
 
 let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound, matchStartSound, ambienceSound;
 

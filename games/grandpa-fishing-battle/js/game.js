@@ -639,7 +639,7 @@ const endMatch = function () {
   // Add winner text
   const winnerText = this.add.text(
     this.cameras.main.centerX,
-    this.cameras.main.centerY - 100,
+    this.cameras.main.centerY - 200,
     `${winner} wins!`,
     { fontSize: '32px', fill: '#fff' }
   );
@@ -664,7 +664,7 @@ const endMatch = function () {
   this.cameras.main.flash(500, 255, 255, 255);
 
   // Add zooming camera effect
-  this.cameras.main.zoomTo(1.5, 1000);
+  this.cameras.main.zoomTo(1.3, 1000, 'Sine.easeInOut');
 
   // Hide lures instead of removing them
   SetLureVisible(player1.lure, false, this);

@@ -633,23 +633,31 @@ function changeWeather() {
 }
 
 function setBackgroundTint(weather) {
-  //const background = this.children.getByName('background');
+  let targetTint;
   switch (weather) {
     case 'sunny':
-      background.setTint(0xffffff); // No tint
+      targetTint = 0xffffff; // No tint
       break;
     case 'cloudy':
-      background.setTint(0x808080); // Gray tint
+      targetTint = 0x808080; // Gray tint
       break;
     case 'rainbows':
-      background.setTint(0xff69b4); // Pink tint
+      targetTint = 0xff69b4; // Pink tint
       break;
     case 'winter':
-      background.setTint(0xadd8e6); // Light blue tint
+      targetTint = 0xadd8e6; // Light blue tint
       break;
     default:
-      background.setTint(0xffffff); // No tint
+      targetTint = 0xffffff; // No tint
   }
+  background.setTint(targetTint); // No tint
+
+  //this.tweens.add({
+  //  targets: background,
+  //  tint: targetTint,
+  //  duration: 500,
+  //  ease: 'Linear'
+  //});
 }
 
 const endMatch = function () {

@@ -395,9 +395,9 @@ function handlePlayerInput(player, action, scene) {
       grandpaASadSound.play();
     } else if (matchResult === 'No one') {
       if (player === 1) {
-        grandpaASadSound.play();
+        grandpaAHappySound.play();
       } else {
-        grandpaBSadSound.play();
+        grandpaBHappySound.play();
       }
     }
 
@@ -857,9 +857,9 @@ const endMatch = function () {
     player2.setTexture('granpaB_results', 3); // Winning player with fish captured sprite
     player1.setTexture('granpaA_results', 2); // Losing player with sad sprite
   } else {
-    winner = 'No one';
-    player1.setTexture('granpaA_results', 2); // Both players with sad sprite
-    player2.setTexture('granpaB_results', 2);
+    winner = 'Everyone';
+    player1.setTexture('granpaA_results', 3); // Both players with happy sprite
+    player2.setTexture('granpaB_results', 3);
   }
 
   matchResult = winner; // Set the match result flag

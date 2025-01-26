@@ -132,24 +132,24 @@ function create() {
 
   setBackgroundTint.call(this, weather); // Set initial background tint based on weather
 
-  player1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY-200, 'granpaA_fishing', 0);
-  player2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY-200, 'granpaB_fishing', 0);
+  player1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY-150, 'granpaA_fishing', 0);
+  player2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY-150, 'granpaB_fishing', 0);
 
   // Scale down player1 by 1/4
   player1.setScale(0.25);
   player2.setScale(0.25);
 
-  player1Button = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 250, 'button')
+  player1Button = this.add.sprite(this.cameras.main.centerX - 250, this.cameras.main.centerY + 250, 'button')
     .setInteractive()
     .setOrigin(0.5)
     .setScale(2);
-  player2Button = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY + 250, 'button')
+  player2Button = this.add.sprite(this.cameras.main.centerX + 250, this.cameras.main.centerY + 250, 'button')
     .setInteractive()
     .setOrigin(0.5)
     .setScale(2);
 
-  player1Button.on('pointerup', () => handlePlayerInput(1, 'keydown', this));
-  player1Button.on('pointerdown', () => handlePlayerInput(1, 'keyup', this));
+  player1Button.on('pointerdown', () => handlePlayerInput(1, 'keydown', this));
+  player1Button.on('pointerup', () => handlePlayerInput(1, 'keyup', this));
   player2Button.on('pointerdown', () => handlePlayerInput(2, 'keydown', this));
   player2Button.on('pointerup', () => handlePlayerInput(2, 'keyup', this));
 

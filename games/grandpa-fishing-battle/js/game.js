@@ -59,7 +59,7 @@ const anticipationFrames = 30;
 const cooldownFrames = 40;
 const showLootFrames = 70;
 
-let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound, matchStartSound, ambienceSound;
+let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound, matchStartSound, ambienceSound, idleSound;
 
 let grandpaTween;
 
@@ -120,6 +120,8 @@ function preload() {
 
   // Load boat image
   this.load.image('boat', 'assets/boat.png'); // Pf8d8
+
+  this.load.audio('idle', 'assets/sfx/rodouttawater6_outplop.wav'); // Load idle sound effect
 
 }
 
@@ -211,6 +213,8 @@ function create() {
 
   this.matchStartMusic = this.sound.add('match-start-music'); // Add match start music
   this.matchEndMusic = this.sound.add('match-end-music'); // Add match end music
+
+  idleSound = this.sound.add('idle'); // Add idle sound effect
 
   // Add lure sprites for each player and scale them to 1/4 size
   const lure1 = this.add.sprite(this.cameras.main.centerX - 200, this.cameras.main.centerY + 150, 'lure');
@@ -722,6 +726,7 @@ function updatePlayerState(player, scene) {
     if (playerShowLootTime === 0) {
       playerState = 'idle';
       playerSprite.setTexture(playerIdleTexture, 0);
+      idleSound.play(); // Play idle sound effect
 
       if (player === 1 && player1HoldingButton) {
         //default all wait times
@@ -881,7 +886,8 @@ const endMatch = function () {
   )
     .setInteractive()
     .setOrigin(0.5)
-    .setVisible(true);
+    .setVisible(true)
+    .setScale(0.25); // Set the scale of the "Play Again" button to 0.25
 
   playAgainButton.on('pointerdown', () => {
     matchFinished = false;

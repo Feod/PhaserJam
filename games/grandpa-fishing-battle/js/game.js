@@ -513,6 +513,7 @@ function updatePlayerState(player, scene) {
     playerIdleTexture = 'granpaA_fishing';
     playerPullFinishNoFishTexture = 'granpaA_results';
     playerPullFinishYayFishTexture = 'granpaA_results';
+    playerPullingRodOutTexture = 'granpaA_fishing';
     playerFishCount = player1FishCount;
     playerLure = player1.lure;
   } else {
@@ -528,6 +529,7 @@ function updatePlayerState(player, scene) {
     playerIdleTexture = 'granpaB_fishing';
     playerPullFinishNoFishTexture = 'granpaB_results';
     playerPullFinishYayFishTexture = 'granpaB_results';
+    playerPullingRodOutTexture = 'granpaB_fishing';
     playerFishCount = player2FishCount;
     playerLure = player2.lure;
   }

@@ -664,8 +664,10 @@ function updatePlayerState(player, scene) {
 
       if (player === 1 && player1HoldingButton) {
         handlePlayerInput(1, 'keydown', scene);
+        return; // P8d32
       } else if (player === 2 && player2HoldingButton) {
         handlePlayerInput(2, 'keydown', scene);
+        return; // P8d32
       }
     }
 
@@ -682,8 +684,10 @@ function updatePlayerState(player, scene) {
 
       if (player === 1 && player1HoldingButton) {
         handlePlayerInput(1, 'keydown', scene);
+        return;
       } else if (player === 2 && player2HoldingButton) {
         handlePlayerInput(2, 'keydown', scene);
+        return;
       }
     }
   }

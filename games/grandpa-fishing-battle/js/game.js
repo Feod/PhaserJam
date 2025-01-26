@@ -112,7 +112,8 @@ function preload() {
   this.load.audio('match-end-music', 'assets/music/Best Grandpa_Cthulhu.mp3'); // Load match end music
 
   // Load fish image
-  this.load.image('fish', 'assets/fish.png'); // P3b6c
+  this.load.image('fish', 'assets/fish.png');
+
 }
 
 function create() {
@@ -567,7 +568,7 @@ function updatePlayerState(player, scene) {
         //scene.fishEmitter.setPosition(playerSprite.x, playerSprite.y);
         //scene.fishEmitter.explode(30); // Pea0e
 
-        createParticleExplosion(playerSprite.x, playerSprite.y, this);
+        createParticleExplosion(playerSprite.x, playerSprite.y, scene);
 
 
       } else {

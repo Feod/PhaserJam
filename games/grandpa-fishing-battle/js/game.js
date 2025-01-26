@@ -132,19 +132,21 @@ function create() {
 
   setBackgroundTint.call(this, weather); // Set initial background tint based on weather
 
-  player1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY-100, 'granpaA_fishing', 0);
-  player2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY-100, 'granpaB_fishing', 0);
+  player1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY-200, 'granpaA_fishing', 0);
+  player2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY-200, 'granpaB_fishing', 0);
 
   // Scale down player1 by 1/4
   player1.setScale(0.25);
   player2.setScale(0.25);
 
-  player1Button = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 150, 'button')
+  player1Button = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 250, 'button')
     .setInteractive()
-    .setOrigin(0.5);
-  player2Button = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY + 150, 'button')
+    .setOrigin(0.5)
+    .setScale(2);
+  player2Button = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY + 250, 'button')
     .setInteractive()
-    .setOrigin(0.5);
+    .setOrigin(0.5)
+    .setScale(2);
 
   player1Button.on('pointerup', () => handlePlayerInput(1, 'keydown', this));
   player1Button.on('pointerdown', () => handlePlayerInput(1, 'keyup', this));
@@ -208,7 +210,7 @@ function create() {
   this.creditsText = this.add.text(
     this.cameras.main.centerX,
     this.cameras.main.height - 350,
-    "Made at FGJ Tampere 2025\nRepository: Feod/PhaserJam\nArt & Design: Silakka, Design & Production: Miikka, Grandpa voices and other SFX: Pyry (Routalanttu)\nTools used: Phaser 3.87.0, Visual Studio Code, Audacity\nAI services utilized: Github Copilot Workspace (CODE), SUNO 3.5 (MUSIC)\nForest_Ambience.mp3 author: TinyWorlds from opengameart.org",
+    "Made at FGJ Tampere 2025\nRepository: Feod/PhaserJam\nArt & Design: Silakka, Design & Production: Miikka\nGrandpa voices and other SFX: Pyry (Routalanttu)\nTools used: Phaser 3.87.0, Visual Studio Code, Audacity\nAI services utilized: Github Copilot Workspace (CODE), SUNO 3.5 (MUSIC)\nForest_Ambience.mp3 author: TinyWorlds from opengameart.org",
     { fontSize: '16px', fill: '#fff', align: 'center' }
   );
   this.creditsText.setOrigin(0.5);
@@ -797,7 +799,7 @@ function startMatchAnimation() {
 
 
 function createParticleExplosion(x, y, scene) {
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 5; i++) {
     const fish = scene.add.image(x, y, 'fish');
 
     // Randomize speed and direction
@@ -807,14 +809,18 @@ function createParticleExplosion(x, y, scene) {
     //Random rotation
     fish.rotation = Phaser.Math.Between(0, 360);
 
+    //Random size
+    fish.setScale(Phaser.Math.Between(0.1, 0.5));
+
     // Animate position
     scene.tweens.add({
       targets: fish,
       x: fish.x + speedX,
       y: fish.y + speedY,
-      alpha: 0, // Fade out
+      //alpha: 0, // Fade out
       scale: 0, // Shrink to nothing
       duration: 200,
+      ease: 'Power2',
       onComplete: () => fish.destroy(), // Clean up
     });
   }

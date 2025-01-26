@@ -61,6 +61,10 @@ let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWate
 
 let grandpaTween;
 
+let fishParticles;
+let fishEmitter;
+
+
 function preload() {
   this.load.image('background', 'assets/background.png');
 
@@ -218,6 +222,8 @@ function create() {
     gravityY: 800
   });
   this.fishEmitter.stop(); // Stop emitter initially
+
+  
 }
 
 function update() {

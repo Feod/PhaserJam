@@ -178,6 +178,10 @@ function create() {
   player1ScoreText.setVisible(false);
   player2ScoreText.setVisible(false);
 
+  // Initialize score variables
+  player1FishCount = 0;
+  player2FishCount = 0;
+
   // Add key bindings
   //this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown', this));
   //this.input.keyboard.on('keyup-Z', () => handlePlayerInput(1, 'keyup', this));
@@ -854,6 +858,8 @@ const endMatch = function () {
     this.matchEndMusic.stop(); // Stop match end music
     ambienceSound.stop(); // Stop ambience sound
     this.scene.restart(); // Restart the scene
+    player1FishCount = 0; // Reset player 1 score
+    player2FishCount = 0; // Reset player 2 score
   });
 
   // Add screen flash effect
@@ -891,6 +897,10 @@ function startMatchAnimation() {
   // Show score texts when the match starts
   player1ScoreText.setVisible(true);
   player2ScoreText.setVisible(true);
+
+  // Reset player fish counts
+  player1FishCount = 0;
+  player2FishCount = 0;
 }
 
 

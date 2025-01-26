@@ -57,7 +57,7 @@ const anticipationFrames = 30;
 const cooldownFrames = 40;
 const showLootFrames = 40;
 
-let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound, matchStartSound;
+let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound, matchStartSound, ambienceSound;
 
 let grandpaTween;
 
@@ -102,6 +102,7 @@ function preload() {
 
   this.load.audio('match-start', 'assets/sfx/grandpahappy01.wav'); // Match start sound effect
 
+  this.load.audio('ambience', 'assets/music/Forest_Ambience.mp3'); // Load ambience soundtrack
 }
 
 function create() {
@@ -161,6 +162,9 @@ function create() {
   grandpaASadSound = this.sound.add('grandpaA-sad');
   grandpaBSadSound = this.sound.add('grandpaB-sad');
   matchStartSound = this.sound.add('match-start'); // Match start sound effect
+
+  ambienceSound = this.sound.add('ambience'); // Add ambience sound
+  ambienceSound.play({ loop: true }); // Play ambience sound in a loop
 
   // Add lure sprites for each player and scale them to 1/4 size
   const lure1 = this.add.sprite(this.cameras.main.centerX - 200, this.cameras.main.centerY + 150, 'lure');

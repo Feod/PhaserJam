@@ -139,14 +139,16 @@ function create() {
   player1.setScale(0.25);
   player2.setScale(0.25);
 
-  player1Button = this.add.sprite(this.cameras.main.centerX - 250, this.cameras.main.centerY + 250, 'button')
+  player1Button = this.add.sprite(this.cameras.main.centerX - 400, this.cameras.main.centerY + 300, 'button')
     .setInteractive()
     .setOrigin(0.5)
-    .setScale(2);
-  player2Button = this.add.sprite(this.cameras.main.centerX + 250, this.cameras.main.centerY + 250, 'button')
+    .setScale(6)
+    .setAlpha(0.1);
+  player2Button = this.add.sprite(this.cameras.main.centerX + 400, this.cameras.main.centerY + 300, 'button')
     .setInteractive()
     .setOrigin(0.5)
-    .setScale(2);
+    .setScale(6)
+    .setAlpha(0.1);
 
   player1Button.on('pointerdown', () => handlePlayerInput(1, 'keydown', this));
   player1Button.on('pointerup', () => handlePlayerInput(1, 'keyup', this));

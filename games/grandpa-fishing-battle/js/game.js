@@ -781,7 +781,7 @@ const endMatch = function () {
   SetLureVisible(player2.lure, false, this);
 
   this.matchStartMusic.stop(); // Stop match start music
-  this.matchEndMusic.play(); // Play match end music
+  this.matchEndMusic.play({ volume: 0.9 }); // Play match end music
 }
 
 function startMatchAnimation() {
@@ -794,7 +794,7 @@ function startMatchAnimation() {
   // Play match start sound effect
   matchStartSound.play();
 
-  this.matchStartMusic.play(); // Play match start music
+  this.matchStartMusic.play({ volume: 0.9 }); // Play match start music
 }
 
 

@@ -359,7 +359,8 @@ function handlePlayerInput(player, action, scene) {
         matchStarted = true;
         waitingForMatchStart = false;
         matchFinished = false;
-        matchTimer = 1200;
+        //matchTimer = 1200;
+        matchTimer = 6500;
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
         SetLureVisible(player1.lure, matchStarted, scene);
         SetLureVisible(player2.lure, matchStarted, scene);

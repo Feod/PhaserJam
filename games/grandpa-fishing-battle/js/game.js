@@ -79,7 +79,7 @@ function preload() {
   this.load.spritesheet('granpaB_results', 'assets/granpaB_results.png', { frameWidth: 1024, frameHeight: 1024 });
 
   this.load.image('button', 'assets/button.png');
-  this.load.image('play-again', 'assets/play-again.png');
+  this.load.image('play-again', 'assets/again_button.png');
   this.load.spritesheet('lure', 'assets/lure.png', { frameWidth: 512, frameHeight: 512 });
 
   // Define lure animation
@@ -611,7 +611,7 @@ function updatePlayerState(player, scene) {
   if (playerState === 'pulling-rod-out') {
     playerAnticipation--;
 
-    if (playerAnticipation === anticipationFrames / 2) {
+    if (playerAnticipation === (anticipationFrames / 2)-5) {
       playerSprite.setTexture(playerPullingRodOutTexture, 3);
     }
 
@@ -678,7 +678,13 @@ function updatePlayerState(player, scene) {
       }
   
       playerState = 'show-loot';
-      playerShowLootTime = showLootFrames;
+
+      //Balance for the benefit of losing player
+      if(gotFish){
+        playerShowLootTime = showLootFrames;
+      }else{
+        playerShowLootTime = showLootFrames-10;
+      }
 
     }else{
       playerState = 'idle';
@@ -686,9 +692,21 @@ function updatePlayerState(player, scene) {
       playerCooldown = 0;
 
       if (player === 1 && player1HoldingButton) {
+        //default all wait times
+        player1State = 'idle';
+        player1Anticipation = 0;
+        player1RodTime = 0;
+        player1Cooldown = 0;
+        player1ShowLootTime = 0;
         handlePlayerInput(1, 'keydown', scene);
         return; // P8d32
       } else if (player === 2 && player2HoldingButton) {
+        //default all wait times
+        player2State = 'idle';
+        player2Anticipation = 0;
+        player2RodTime = 0;
+        player2Cooldown = 0;
+        player2ShowLootTime = 0;
         handlePlayerInput(2, 'keydown', scene);
         return; // P8d32
       }
@@ -706,9 +724,21 @@ function updatePlayerState(player, scene) {
       playerSprite.setTexture(playerIdleTexture, 0);
 
       if (player === 1 && player1HoldingButton) {
+        //default all wait times
+        player1State = 'idle';
+        player1Anticipation = 0;
+        player1RodTime = 0;
+        player1Cooldown = 0;
+        player1ShowLootTime = 0;
         handlePlayerInput(1, 'keydown', scene);
         return;
       } else if (player === 2 && player2HoldingButton) {
+        //default all wait times
+        player2State = 'idle';
+        player2Anticipation = 0;
+        player2RodTime = 0;
+        player2Cooldown = 0;
+        player2ShowLootTime = 0;
         handlePlayerInput(2, 'keydown', scene);
         return;
       }
@@ -910,13 +940,13 @@ function createParticleExplosion(x, y, scene) {
 
     // Randomize speed and direction
     const speedX = Phaser.Math.Between(-400, 400);
-    const speedY = Phaser.Math.Between(-400, 400);
+    const speedY = Phaser.Math.Between(-400, 300);
 
     //Random rotation
     fish.rotation = Phaser.Math.Between(0, 360);
 
     //Random size
-    fish.setScale(Phaser.Math.Between(0.1, 0.5));
+    fish.setScale(Phaser.Math.Between(0.05, 0.2));
 
     // Animate position
     scene.tweens.add({
@@ -925,7 +955,7 @@ function createParticleExplosion(x, y, scene) {
       y: fish.y + speedY,
       //alpha: 0, // Fade out
       scale: 0, // Shrink to nothing
-      duration: 200,
+      duration: 300,
       ease: 'Power2',
       onComplete: () => fish.destroy(), // Clean up
     });

@@ -55,7 +55,7 @@ const anticipationFrames = 30;
 const cooldownFrames = 40;
 const showLootFrames = 40;
 
-let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound;
+let plopSound, grandpaAPullFromWaterSound, grandpaBPullFromWaterSound, outOfWaterSplashSounds, grandpaAHappySound, grandpaBHappySound, grandpaASadSound, grandpaBSadSound, matchStartSound;
 
 let grandpaTween;
 
@@ -89,6 +89,8 @@ function preload() {
   this.load.audio('grandpaB-happy', 'assets/sfx/grandpahappy09.wav');
   this.load.audio('grandpaA-sad', 'assets/sfx/sadgrandpa09.wav');
   this.load.audio('grandpaB-sad', 'assets/sfx/sadgrandpa08.wav');
+
+  this.load.audio('match-start', 'assets/sfx/grandpahappy01.wav'); // Match start sound effect
 
 }
 
@@ -148,6 +150,7 @@ function create() {
   grandpaBHappySound = this.sound.add('grandpaB-happy');
   grandpaASadSound = this.sound.add('grandpaA-sad');
   grandpaBSadSound = this.sound.add('grandpaB-sad');
+  matchStartSound = this.sound.add('match-start'); // Match start sound effect
 
   // Add lure sprites for each player and scale them to 1/4 size
   const lure1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY + 150, 'lure');
@@ -311,6 +314,7 @@ function handlePlayerInput(player, action, scene) {
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
         SetLureVisible(player1.lure, matchStarted, scene);
         SetLureVisible(player2.lure, matchStarted, scene);
+        startMatchAnimation.call(scene); // Start match animation and effects
 
       }
 
@@ -666,7 +670,19 @@ const endMatch = function () {
   // Add zooming camera effect
   this.cameras.main.zoomTo(1.3, 1000, 'Sine.easeInOut');
 
+
   // Hide lures instead of removing them
   SetLureVisible(player1.lure, false, this);
   SetLureVisible(player2.lure, false, this);
+}
+
+function startMatchAnimation() {
+  // Add screen flash effect
+  this.cameras.main.flash(500, 0, 255, 0); // Make flash more green and less bright
+
+  // Add zooming camera effect
+  this.cameras.main.zoomTo(1.05, 1000, 'Power2');
+
+  // Play match start sound effect
+  matchStartSound.play();
 }

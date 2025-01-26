@@ -198,6 +198,12 @@ function create() {
   );
   this.creditsText.setOrigin(0.5);
   this.creditsText.setVisible(false); // Hide credits initially
+
+  // Stop any currently playing ambience sound before starting a new one
+  if (ambienceSound.isPlaying) {
+    ambienceSound.stop();
+  }
+  ambienceSound.play({ loop: true });
 }
 
 function update() {
@@ -719,6 +725,8 @@ const endMatch = function () {
 
   playAgainButton.on('pointerdown', () => {
     matchFinished = false;
+    this.matchEndMusic.stop(); // Stop match end music
+    ambienceSound.stop(); // Stop ambience sound
     this.scene.restart(); // Restart the scene
   });
 

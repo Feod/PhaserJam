@@ -358,7 +358,8 @@ function handlePlayerInput(player, action, scene) {
         waitingForMatchStart = false;
         matchFinished = false;
         //matchTimer = 1200;
-        matchTimer = 6500;
+        //matchTimer = 6600; //maybe good??
+        matchTimer = 3300;
         matchTimerLabel.setText('Match Time: ' + matchTimer); // Update match timer label
         SetLureVisible(player1.lure, matchStarted, scene);
         SetLureVisible(player2.lure, matchStarted, scene);
@@ -789,12 +790,15 @@ function startMatchAnimation() {
 
 
 function createParticleExplosion(x, y, scene) {
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 8; i++) {
     const fish = scene.add.image(x, y, 'fish');
 
     // Randomize speed and direction
-    const speedX = Phaser.Math.Between(-200, 200);
-    const speedY = Phaser.Math.Between(-200, 200);
+    const speedX = Phaser.Math.Between(-400, 400);
+    const speedY = Phaser.Math.Between(-400, 400);
+
+    //Random rotation
+    fish.rotation = Phaser.Math.Between(0, 360);
 
     // Animate position
     scene.tweens.add({
@@ -803,7 +807,7 @@ function createParticleExplosion(x, y, scene) {
       y: fish.y + speedY,
       alpha: 0, // Fade out
       scale: 0, // Shrink to nothing
-      duration: 1000,
+      duration: 200,
       onComplete: () => fish.destroy(), // Clean up
     });
   }

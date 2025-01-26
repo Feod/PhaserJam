@@ -106,6 +106,9 @@ function preload() {
 
   this.load.audio('match-start-music', 'assets/music/C_Cthulhu.mp3'); // Load match start music
   this.load.audio('match-end-music', 'assets/music/Best Grandpa_Cthulhu.mp3'); // Load match end music
+
+  // Load fish image
+  this.load.image('fish', 'assets/fish.png'); // P3b6c
 }
 
 function create() {
@@ -204,6 +207,17 @@ function create() {
     ambienceSound.stop();
   }
   ambienceSound.play({ loop: true });
+
+  // Create particle explosion effect using fish image
+  this.fishParticles = this.add.particles('fish'); // Pecfe
+  this.fishEmitter = this.fishParticles.createEmitter({
+    speed: { min: -200, max: 200 },
+    scale: { start: 0.5, end: 0 },
+    blendMode: 'ADD',
+    lifespan: 1000,
+    gravityY: 800
+  });
+  this.fishEmitter.stop(); // Stop emitter initially
 }
 
 function update() {
@@ -548,6 +562,10 @@ function updatePlayerState(player, scene) {
           player2GotFish = true;
           grandpaBHappySound.play();
         }
+
+        // Play particle explosion effect
+        scene.fishEmitter.setPosition(playerSprite.x, playerSprite.y);
+        scene.fishEmitter.explode(30); // Pea0e
 
       } else {
 

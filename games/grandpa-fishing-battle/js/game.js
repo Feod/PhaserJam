@@ -114,6 +114,9 @@ function preload() {
   // Load fish image
   this.load.image('fish', 'assets/fish.png');
 
+  // Load boat image
+  this.load.image('boat', 'assets/boat.png'); // Pf8d8
+
 }
 
 function create() {
@@ -122,6 +125,10 @@ function create() {
   background.setOrigin(0, 0);
   background.displayWidth = this.sys.game.config.width;
   background.displayHeight = this.sys.game.config.height;
+
+  // Add boat sprite above background but behind grandpas
+  const boat = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'boat'); // P4236
+  boat.setScale(0.25); // P4983
 
   setBackgroundTint.call(this, weather); // Set initial background tint based on weather
 

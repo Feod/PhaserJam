@@ -64,6 +64,8 @@ let grandpaTween;
 let fishParticles;
 let fishEmitter;
 
+let player1HoldingButton = false;
+let player2HoldingButton = false;
 
 function preload() {
   this.load.image('background', 'assets/background.png');
@@ -315,6 +317,13 @@ function handlePlayerInput(player, action, scene) {
     playerRodInWaterTexture = 'granpaA_fishing';
     playerPullingRodOutTexture = 'granpaA_fishing';
     playerLure = player1.lure;
+
+    if (action === 'keydown') {
+      player1HoldingButton = true;
+    } else if (action === 'keyup') {
+      player1HoldingButton = false;
+    }
+
   } else {
 
     tweenTarget = player2;
@@ -329,6 +338,13 @@ function handlePlayerInput(player, action, scene) {
     playerRodInWaterTexture = 'granpaB_fishing';
     playerPullingRodOutTexture = 'granpaB_fishing';
     playerLure = player2.lure;
+
+    if (action === 'keydown') {
+      player2HoldingButton = true;
+    } else if (action === 'keyup') {
+      player2HoldingButton = false;
+    }
+
   }
 
   if(matchFinished){
@@ -636,6 +652,12 @@ function updatePlayerState(player, scene) {
       playerState = 'idle';
       playerSprite.setTexture(playerIdleTexture, 0);
       playerCooldown = 0;
+
+      if (player === 1 && player1HoldingButton) {
+        handlePlayerInput(1, 'keydown', scene);
+      } else if (player === 2 && player2HoldingButton) {
+        handlePlayerInput(2, 'keydown', scene);
+      }
     }
 
     // Hide lure
@@ -648,6 +670,12 @@ function updatePlayerState(player, scene) {
     if (playerShowLootTime === 0) {
       playerState = 'idle';
       playerSprite.setTexture(playerIdleTexture, 0);
+
+      if (player === 1 && player1HoldingButton) {
+        handlePlayerInput(1, 'keydown', scene);
+      } else if (player === 2 && player2HoldingButton) {
+        handlePlayerInput(2, 'keydown', scene);
+      }
     }
   }
 

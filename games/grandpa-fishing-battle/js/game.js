@@ -106,7 +106,7 @@ function preload() {
   this.load.audio('grandpaA-happy', 'assets/sfx/grandpahappy07.wav');
   this.load.audio('grandpaB-happy', 'assets/sfx/grandpahappy09.wav');
   this.load.audio('grandpaA-sad', 'assets/sfx/sadgrandpa09.wav');
-  this.load.audio('grandpaB-sad', 'assets/sfx/sadgrandpa08.wav');
+  this.load.audio('grandpaB-sad', 'assets/sfx/sadgrandpa06.wav');
 
   this.load.audio('match-start', 'assets/sfx/grandpahappy01.wav'); // Match start sound effect
 

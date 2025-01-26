@@ -212,32 +212,7 @@ function create() {
   }
   ambienceSound.play({ loop: true });
 
-  // Create particle explosion effect using fish image
-  //this.fishParticles = this.add.particles('fish'); // Pecfe
-  //this.fishEmitter = this.fishParticles.createEmitter({
-  //  speed: { min: -200, max: 200 },
-  //  scale: { start: 0.5, end: 0 },
-  //  blendMode: 'NORMAL',
-  //  lifespan: 1000,
-  //  gravityY: 800
-  //});
-  //this.fishEmitter.stop(); // Stop emitter initially
-
-  // Add the particle manager with your fish image
-this.fishParticles = this.add.particles('fish'); // Ensure 'fish' is preloaded in the preload() function
-
-// Add an emitter through the particle manager
-this.fishEmitter = this.fishParticles.addEmitter({
-  x: 0, // Default position (can be updated dynamically)
-  y: 0,
-  speed: { min: -200, max: 200 }, // Random speed between -200 and 200
-  scale: { start: 0.5, end: 0 }, // Start at scale 0.5 and shrink to 0
-  blendMode: 'NORMAL', // Makes particles look like light effects
-  lifespan: 1000, // Each particle lasts for 1000ms
-  gravityY: 800, // Apply gravity to particles
-  quantity: 0 // Ensure no particles emit continuously by default
-});
-this.fishEmitter.stop(); // Stop emitter initially
+ 
 
   
 }

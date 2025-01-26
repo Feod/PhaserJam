@@ -103,6 +103,9 @@ function preload() {
   this.load.audio('match-start', 'assets/sfx/grandpahappy01.wav'); // Match start sound effect
 
   this.load.audio('ambience', 'assets/music/Forest_Ambience.mp3'); // Load ambience soundtrack
+
+  this.load.audio('match-start-music', 'assets/music/C_Cthulhu.mp3'); // Load match start music
+  this.load.audio('match-end-music', 'assets/music/Best Grandpa_Cthulhu.mp3'); // Load match end music
 }
 
 function create() {
@@ -165,6 +168,9 @@ function create() {
 
   ambienceSound = this.sound.add('ambience'); // Add ambience sound
   ambienceSound.play({ loop: true }); // Play ambience sound in a loop
+
+  this.matchStartMusic = this.sound.add('match-start-music'); // Add match start music
+  this.matchEndMusic = this.sound.add('match-end-music'); // Add match end music
 
   // Add lure sprites for each player and scale them to 1/4 size
   const lure1 = this.add.sprite(this.cameras.main.centerX - 200, this.cameras.main.centerY + 150, 'lure');
@@ -728,6 +734,9 @@ const endMatch = function () {
   // Hide lures instead of removing them
   SetLureVisible(player1.lure, false, this);
   SetLureVisible(player2.lure, false, this);
+
+  this.matchStartMusic.stop(); // Stop match start music
+  this.matchEndMusic.play(); // Play match end music
 }
 
 function startMatchAnimation() {
@@ -739,4 +748,6 @@ function startMatchAnimation() {
 
   // Play match start sound effect
   matchStartSound.play();
+
+  this.matchStartMusic.play(); // Play match start music
 }

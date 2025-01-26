@@ -650,13 +650,14 @@ function setBackgroundTint(weather) {
     default:
       targetTint = 0xffffff; // No tint
   }
+  background.setTint(targetTint); // No tint
 
-  this.tweens.add({
-    targets: background,
-    tint: targetTint,
-    duration: 500,
-    ease: 'Linear'
-  });
+  //this.tweens.add({
+  //  targets: background,
+  //  tint: targetTint,
+  //  duration: 500,
+  //  ease: 'Linear'
+  //});
 }
 
 const endMatch = function () {

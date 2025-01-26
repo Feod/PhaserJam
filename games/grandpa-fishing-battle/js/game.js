@@ -213,7 +213,7 @@ function create() {
   this.fishEmitter = this.fishParticles.createEmitter({
     speed: { min: -200, max: 200 },
     scale: { start: 0.5, end: 0 },
-    blendMode: 'ADD',
+    blendMode: 'NORMAL',
     lifespan: 1000,
     gravityY: 800
   });

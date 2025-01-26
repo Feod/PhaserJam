@@ -74,6 +74,14 @@ function preload() {
   this.load.image('play-again', 'assets/play-again.png');
   this.load.spritesheet('lure', 'assets/lure.png', { frameWidth: 512, frameHeight: 512 });
 
+  // Define lure animation
+  this.anims.create({
+    key: 'lure-animate',
+    frames: this.anims.generateFrameNumbers('lure', { start: 0, end: 3 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
   //Use random plop each time
   this.load.audio('plop-0', 'assets/sfx/plop.wav');
   this.load.audio('plop-1', 'assets/sfx/rodouttawater7.wav');
@@ -439,6 +447,14 @@ function SetLureVisible(theLure, visible, scene){
   
 }
 
+function animateLure(theLure, hasFish) {
+  if (hasFish) {
+    theLure.play('lure-animate');
+  } else {
+    theLure.stop();
+  }
+}
+
 function updatePlayerState(player, scene) {
 
   if(matchFinished) return;
@@ -579,6 +595,11 @@ function updatePlayerState(player, scene) {
     player2Cooldown = playerCooldown;
     player2ShowLootTime = playerShowLootTime;
     player2FishCount = playerFishCount;
+  }
+
+  // Animate lure if visible and there is a catch
+  if (playerLure.visible) {
+    animateLure(playerLure, checkFishCatch(playerRodTime));
   }
 }
 

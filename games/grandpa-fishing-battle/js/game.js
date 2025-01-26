@@ -133,7 +133,7 @@ function create() {
   background.displayHeight = this.sys.game.config.height;
 
   // Add boat sprite above background but behind grandpas
-  const boat = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY+40, 'boat'); // P4236
+  const boat = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY+10, 'boat'); // P4236
   boat.setScale(0.25); // P4983
 
   setBackgroundTint.call(this, weather); // Set initial background tint based on weather
@@ -397,7 +397,7 @@ function handlePlayerInput(player, action, scene) {
       grandpaBSadSound.play();
     } else if (matchResult === 'Player 2' && player === 1) {
       grandpaASadSound.play();
-    } else if (matchResult === 'No one') {
+    } else if (matchResult === 'Everyone') {
       if (player === 1) {
         grandpaAHappySound.play();
       } else {

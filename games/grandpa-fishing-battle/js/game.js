@@ -845,7 +845,7 @@ const endMatch = function () {
   SetLureVisible(player2.lure, false, this);
 
   this.matchStartMusic.stop(); // Stop match start music
-  this.matchEndMusic.play({ volume: 0.9 }); // Play match end music
+  this.matchEndMusic.play({ volume: 0.75 }); // Play match end music
 
   // Hide large timer text
   largeTimerText.setVisible(false);
@@ -861,7 +861,7 @@ function startMatchAnimation() {
   // Play match start sound effect
   matchStartSound.play();
 
-  this.matchStartMusic.play({ volume: 0.9 }); // Play match start music
+  this.matchStartMusic.play({ volume: 0.75 }); // Play match start music
 
   // Show score texts when the match starts
   player1ScoreText.setVisible(true);

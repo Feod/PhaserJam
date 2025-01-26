@@ -51,7 +51,7 @@ let waitingForMatchStart = true;
 let player1GotFish = false;
 let player2GotFish = false;
 
-let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel;
+let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel, largeTimerText;
 
 const anticipationFrames = 30;
 const cooldownFrames = 40;
@@ -161,6 +161,11 @@ function create() {
   weatherLabel = this.add.text(16, 56, 'Weather: ' + weather, { fontSize: '16px', fill: '#fff' });
   matchTimerLabel = this.add.text(16, 76, 'Match Time: ' + matchTimer, { fontSize: '16px', fill: '#fff' });
 
+  // Add large timer text
+  largeTimerText = this.add.text(this.cameras.main.centerX, 100, matchTimer, { fontSize: '48px', fill: '#fff', fontStyle: 'bold', stroke: '#000', strokeThickness: 6 });
+  largeTimerText.setOrigin(0.5);
+  largeTimerText.setVisible(false);
+
   // Add key bindings
   //this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown', this));
   //this.input.keyboard.on('keyup-Z', () => handlePlayerInput(1, 'keyup', this));
@@ -259,6 +264,10 @@ function update() {
       matchTimer = 0;
       endMatch.call(this); // Bind the function to the Scene
     }
+    largeTimerText.setText(matchTimer);
+    largeTimerText.setVisible(true);
+  } else {
+    largeTimerText.setVisible(false);
   }
 
   updatePlayerState(1, this);
@@ -784,6 +793,9 @@ const endMatch = function () {
 
   this.matchStartMusic.stop(); // Stop match start music
   this.matchEndMusic.play({ volume: 0.9 }); // Play match end music
+
+  // Hide large timer text
+  largeTimerText.setVisible(false);
 }
 
 function startMatchAnimation() {

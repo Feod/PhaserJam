@@ -881,7 +881,8 @@ const endMatch = function () {
   )
     .setInteractive()
     .setOrigin(0.5)
-    .setVisible(true);
+    .setVisible(true)
+    .setScale(0.25); // Set the scale of the "Play Again" button to 0.25
 
   playAgainButton.on('pointerdown', () => {
     matchFinished = false;

@@ -562,8 +562,11 @@ function updatePlayerState(player, scene) {
         }
 
         // Play particle explosion effect
-        scene.fishEmitter.setPosition(playerSprite.x, playerSprite.y);
-        scene.fishEmitter.explode(30); // Pea0e
+        //scene.fishEmitter.setPosition(playerSprite.x, playerSprite.y);
+        //scene.fishEmitter.explode(30); // Pea0e
+
+        createParticleExplosion(playerSprite.x, playerSprite.y, this);
+
 
       } else {
 
@@ -779,4 +782,26 @@ function startMatchAnimation() {
   matchStartSound.play();
 
   this.matchStartMusic.play(); // Play match start music
+}
+
+
+function createParticleExplosion(x, y, scene) {
+  for (let i = 0; i < 30; i++) {
+    const fish = scene.add.image(x, y, 'fish');
+
+    // Randomize speed and direction
+    const speedX = Phaser.Math.Between(-200, 200);
+    const speedY = Phaser.Math.Between(-200, 200);
+
+    // Animate position
+    scene.tweens.add({
+      targets: fish,
+      x: fish.x + speedX,
+      y: fish.y + speedY,
+      alpha: 0, // Fade out
+      scale: 0, // Shrink to nothing
+      duration: 1000,
+      onComplete: () => fish.destroy(), // Clean up
+    });
+  }
 }

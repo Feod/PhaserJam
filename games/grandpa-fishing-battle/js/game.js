@@ -75,12 +75,12 @@ function preload() {
   this.load.spritesheet('lure', 'assets/lure.png', { frameWidth: 512, frameHeight: 512 });
 
   // Define lure animation
-  this.anims.create({
-    key: 'lure-animate',
-    frames: this.anims.generateFrameNumbers('assets/lure.png', { start: 0, end: 3 }),
-    frameRate: 10,
-    repeat: -1
-  });
+  //this.anims.create({
+  //  key: 'lure-animate',
+  //  frames: this.anims.generateFrameNumbers('assets/lure.png', { start: 0, end: 3 }),
+  //  frameRate: 10,
+  //  repeat: -1
+  //});
 
   //Use random plop each time
   this.load.audio('plop-0', 'assets/sfx/plop.wav');
@@ -447,13 +447,14 @@ function SetLureVisible(theLure, visible, scene){
   
 }
 
-function animateLure(theLure, hasFish) {
-  if (hasFish) {
-    theLure.play('lure-animate');
-  } else {
-    theLure.stop();
-  }
-}
+
+//function animateLure(theLure, hasFish) {
+//  if (hasFish) {
+//    theLure.play('lure-animate');
+//  } else {
+//    theLure.stop();
+//  }
+//}
 
 function updatePlayerState(player, scene) {
 
@@ -599,7 +600,14 @@ function updatePlayerState(player, scene) {
 
   // Animate lure if visible and there is a catch
   if (playerLure.visible) {
-    animateLure(playerLure, checkFishCatch(playerRodTime));
+    if(checkFishCatch(playerRodTime)){
+      //set lure texture to random
+      const randomFrame = Phaser.Math.Between(0, 3);
+      playerLure.setFrame(randomFrame);
+    }else{
+      playerLure.setFrame(0);
+    }
+    //animateLure(playerLure, checkFishCatch(playerRodTime));
   }
 }
 

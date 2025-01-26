@@ -170,8 +170,12 @@ function create() {
   largeTimerText.setVisible(false);
 
   // Add score text objects for each player
-  player1ScoreText = this.add.text(this.cameras.main.centerX - 300, this.cameras.main.centerY - 200, 'Score: 0', { fontSize: '48px', fill: '#fff', fontStyle: 'bold', stroke: '#000', strokeThickness: 6 });
-  player2ScoreText = this.add.text(this.cameras.main.centerX + 300, this.cameras.main.centerY - 200, 'Score: 0', { fontSize: '48px', fill: '#fff', fontStyle: 'bold', stroke: '#000', strokeThickness: 6 });
+  player1ScoreText = this.add.text(this.cameras.main.centerX - 300, this.cameras.main.centerY - 200, '0', { fontSize: '48px', fill: '#fff', fontStyle: 'bold', stroke: '#000', strokeThickness: 6 });
+  player2ScoreText = this.add.text(this.cameras.main.centerX + 300, this.cameras.main.centerY - 200, '0', { fontSize: '48px', fill: '#fff', fontStyle: 'bold', stroke: '#000', strokeThickness: 6 });
+
+  // Hide score texts initially
+  player1ScoreText.setVisible(false);
+  player2ScoreText.setVisible(false);
 
   // Add key bindings
   //this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown', this));
@@ -695,7 +699,14 @@ function updatePlayerState(player, scene) {
     player1Cooldown = playerCooldown;
     player1ShowLootTime = playerShowLootTime;
     player1FishCount = playerFishCount;
-    player1ScoreText.setText('Score: ' + playerFishCount);
+    player1ScoreText.setText(playerFishCount);
+    scene.tweens.add({
+      targets: player1ScoreText,
+      scaleX: { from: 1, to: 1.2, yoyo: true, duration: 100 },
+      scaleY: { from: 1, to: 1.2, yoyo: true, duration: 100 },
+      ease: 'Power2',
+      paused: true
+    }).play();
   } else {
     player2State = playerState;
     player2Anticipation = playerAnticipation;
@@ -703,7 +714,14 @@ function updatePlayerState(player, scene) {
     player2Cooldown = playerCooldown;
     player2ShowLootTime = playerShowLootTime;
     player2FishCount = playerFishCount;
-    player2ScoreText.setText('Score: ' + playerFishCount);
+    player2ScoreText.setText(playerFishCount);
+    scene.tweens.add({
+      targets: player2ScoreText,
+      scaleX: { from: 1, to: 1.2, yoyo: true, duration: 100 },
+      scaleY: { from: 1, to: 1.2, yoyo: true, duration: 100 },
+      ease: 'Power2',
+      paused: true
+    }).play();
   }
 
   // Animate lure if visible and there is a catch
@@ -844,6 +862,10 @@ function startMatchAnimation() {
   matchStartSound.play();
 
   this.matchStartMusic.play({ volume: 0.9 }); // Play match start music
+
+  // Show score texts when the match starts
+  player1ScoreText.setVisible(true);
+  player2ScoreText.setVisible(true);
 }
 
 

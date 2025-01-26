@@ -163,9 +163,9 @@ function create() {
   matchStartSound = this.sound.add('match-start'); // Match start sound effect
 
   // Add lure sprites for each player and scale them to 1/4 size
-  const lure1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY + 150, 'lure');
+  const lure1 = this.add.sprite(this.cameras.main.centerX - 200, this.cameras.main.centerY + 150, 'lure');
   lure1.setScale(0.25);
-  const lure2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY + 150, 'lure');
+  const lure2 = this.add.sprite(this.cameras.main.centerX + 200, this.cameras.main.centerY + 150, 'lure');
   lure2.setScale(0.25);
 
   // Hide lures initially

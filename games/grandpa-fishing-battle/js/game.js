@@ -77,7 +77,7 @@ function preload() {
   // Define lure animation
   this.anims.create({
     key: 'lure-animate',
-    frames: this.anims.generateFrameNumbers('lure', { start: 0, end: 3 }),
+    frames: this.anims.generateFrameNumbers('assets/lure.png', { start: 0, end: 3 }),
     frameRate: 10,
     repeat: -1
   });

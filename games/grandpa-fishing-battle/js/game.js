@@ -52,6 +52,7 @@ let player1GotFish = false;
 let player2GotFish = false;
 
 let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel, largeTimerText;
+let player1ScoreText, player2ScoreText;
 
 const anticipationFrames = 30;
 const cooldownFrames = 40;
@@ -167,6 +168,10 @@ function create() {
   largeTimerText = this.add.text(this.cameras.main.centerX, 100, matchTimer, { fontSize: '48px', fill: '#fff', fontStyle: 'bold', stroke: '#000', strokeThickness: 6 });
   largeTimerText.setOrigin(0.5);
   largeTimerText.setVisible(false);
+
+  // Add score text objects for each player
+  player1ScoreText = this.add.text(this.cameras.main.centerX - 300, this.cameras.main.centerY - 200, 'Score: 0', { fontSize: '48px', fill: '#fff', fontStyle: 'bold', stroke: '#000', strokeThickness: 6 });
+  player2ScoreText = this.add.text(this.cameras.main.centerX + 300, this.cameras.main.centerY - 200, 'Score: 0', { fontSize: '48px', fill: '#fff', fontStyle: 'bold', stroke: '#000', strokeThickness: 6 });
 
   // Add key bindings
   //this.input.keyboard.on('keydown-Z', () => handlePlayerInput(1, 'keydown', this));
@@ -690,6 +695,7 @@ function updatePlayerState(player, scene) {
     player1Cooldown = playerCooldown;
     player1ShowLootTime = playerShowLootTime;
     player1FishCount = playerFishCount;
+    player1ScoreText.setText('Score: ' + playerFishCount);
   } else {
     player2State = playerState;
     player2Anticipation = playerAnticipation;
@@ -697,6 +703,7 @@ function updatePlayerState(player, scene) {
     player2Cooldown = playerCooldown;
     player2ShowLootTime = playerShowLootTime;
     player2FishCount = playerFishCount;
+    player2ScoreText.setText('Score: ' + playerFishCount);
   }
 
   // Animate lure if visible and there is a catch

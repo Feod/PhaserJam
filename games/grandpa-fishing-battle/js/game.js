@@ -50,6 +50,7 @@ let player2FishCount = 0;
 let waitingForMatchStart = true;
 let player1GotFish = false;
 let player2GotFish = false;
+let matchResult = null; // Add a flag to indicate the match result
 
 let player1StateLabel, player2StateLabel, weatherLabel, matchTimerLabel, largeTimerText;
 let player1ScoreText, player2ScoreText;
@@ -378,6 +379,24 @@ function handlePlayerInput(player, action, scene) {
         paused: true
       }).play();
     }
+
+    // Play grandpa sounds based on match result
+    if (matchResult === 'Player 1' && player === 1) {
+      grandpaAHappySound.play();
+    } else if (matchResult === 'Player 2' && player === 2) {
+      grandpaBHappySound.play();
+    } else if (matchResult === 'Player 1' && player === 2) {
+      grandpaBSadSound.play();
+    } else if (matchResult === 'Player 2' && player === 1) {
+      grandpaASadSound.play();
+    } else if (matchResult === 'No one') {
+      if (player === 1) {
+        grandpaASadSound.play();
+      } else {
+        grandpaBSadSound.play();
+      }
+    }
+
     return;
   }
 
@@ -808,6 +827,8 @@ const endMatch = function () {
     player1.setTexture('granpaA_results', 2); // Both players with sad sprite
     player2.setTexture('granpaB_results', 2);
   }
+
+  matchResult = winner; // Set the match result flag
 
   // Add winner text
   const winnerText = this.add.text(

@@ -133,7 +133,7 @@ function create() {
   background.displayHeight = this.sys.game.config.height;
 
   // Add boat sprite above background but behind grandpas
-  const boat = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'boat'); // P4236
+  const boat = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY+40, 'boat'); // P4236
   boat.setScale(0.25); // P4983
 
   setBackgroundTint.call(this, weather); // Set initial background tint based on weather
@@ -945,14 +945,17 @@ function createParticleExplosion(x, y, scene) {
     const fish = scene.add.image(x, y, 'fish');
 
     // Randomize speed and direction
-    const speedX = Phaser.Math.Between(-400, 400);
-    const speedY = Phaser.Math.Between(-400, 300);
+    const speedX = Phaser.Math.Between(-200, 200);
+    const speedY = Phaser.Math.Between(-200, 100);
 
     //Random rotation
     fish.rotation = Phaser.Math.Between(0, 360);
 
     //Random size
     fish.setScale(Phaser.Math.Between(0.05, 0.2));
+
+    //Random duration
+    const durationNew = Phaser.Math.Between(200, 500);
 
     // Animate position
     scene.tweens.add({
@@ -961,7 +964,7 @@ function createParticleExplosion(x, y, scene) {
       y: fish.y + speedY,
       //alpha: 0, // Fade out
       scale: 0, // Shrink to nothing
-      duration: 300,
+      duration: durationNew,
       ease: 'Power2',
       onComplete: () => fish.destroy(), // Clean up
     });

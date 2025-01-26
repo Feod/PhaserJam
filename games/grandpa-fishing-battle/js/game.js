@@ -316,7 +316,7 @@ function handlePlayerInput(player, action, scene) {
       playerRodTime = 0;
       const randomPlopSound = Phaser.Math.Between(0, plopSound.length - 1);
       plopSound[randomPlopSound].play();
-      if (waitingForMatchStart && (player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
+      if (waitingForMatchStart && ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water'))) {
         matchStarted = true;
         waitingForMatchStart = false;
         matchFinished = false;

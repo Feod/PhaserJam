@@ -192,7 +192,7 @@ function create() {
   // Add credits text object
   this.creditsText = this.add.text(
     this.cameras.main.centerX,
-    this.cameras.main.height - 50,
+    this.cameras.main.height - 350,
     "Made at FGJ Tampere 2025\nRepository: Feod/PhaserJam\nArt & Design: Silakka, Design & Production: Miikka, Grandpa voices and other SFX: Pyry (Routalanttu)\nTools used: Phaser 3.87.0, Visual Studio Code, Audacity\nAI services utilized: Github Copilot Workspace (CODE), SUNO 3.5 (MUSIC)\nForest_Ambience.mp3 author: TinyWorlds from opengameart.org",
     { fontSize: '16px', fill: '#fff', align: 'center' }
   );
@@ -526,6 +526,11 @@ function updatePlayerState(player, scene) {
 
   if (playerState === 'pulling-rod-out') {
     playerAnticipation--;
+
+    if (playerAnticipation === anticipationFrames / 2) {
+      playerSprite.setTexture(playerPullingRodOutTexture, 3);
+    }
+
     if (playerAnticipation === 0) {
       playerState = 'pull-finish';
 

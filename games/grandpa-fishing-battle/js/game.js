@@ -179,6 +179,15 @@ function create() {
   this.p1key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
   this.p2key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
 
+  // Add credits text object
+  this.creditsText = this.add.text(
+    this.cameras.main.centerX,
+    this.cameras.main.height - 50,
+    "Made at FGJ Tampere 2025\nRepository: Feod/PhaserJam\nArt & Design: Silakka, Design & Production: Miikka, Grandpa voices and other SFX: Pyry (Routalanttu)\nTools used: Phaser 3.87.0, Visual Studio Code, Audacity\nAI services utilized: Github Copilot Workspace (CODE), SUNO 3.5 (MUSIC)\nForest_Ambience.mp3 author: TinyWorlds from opengameart.org",
+    { fontSize: '16px', fill: '#fff', align: 'center' }
+  );
+  this.creditsText.setOrigin(0.5);
+  this.creditsText.setVisible(false); // Hide credits initially
 }
 
 function update() {
@@ -709,6 +718,8 @@ const endMatch = function () {
   // Add zooming camera effect
   this.cameras.main.zoomTo(1.3, 1000, 'Sine.easeInOut');
 
+  // Show credits
+  this.creditsText.setVisible(true);
 
   // Hide lures instead of removing them
   SetLureVisible(player1.lure, false, this);

@@ -74,6 +74,14 @@ function preload() {
   this.load.image('play-again', 'assets/play-again.png');
   this.load.spritesheet('lure', 'assets/lure.png', { frameWidth: 512, frameHeight: 512 });
 
+  // Define lure animation
+  //this.anims.create({
+  //  key: 'lure-animate',
+  //  frames: this.anims.generateFrameNumbers('assets/lure.png', { start: 0, end: 3 }),
+  //  frameRate: 10,
+  //  repeat: -1
+  //});
+
   //Use random plop each time
   this.load.audio('plop-0', 'assets/sfx/plop.wav');
   this.load.audio('plop-1', 'assets/sfx/rodouttawater7.wav');
@@ -155,9 +163,9 @@ function create() {
   matchStartSound = this.sound.add('match-start'); // Match start sound effect
 
   // Add lure sprites for each player and scale them to 1/4 size
-  const lure1 = this.add.sprite(this.cameras.main.centerX - 120, this.cameras.main.centerY + 150, 'lure');
+  const lure1 = this.add.sprite(this.cameras.main.centerX - 200, this.cameras.main.centerY + 150, 'lure');
   lure1.setScale(0.25);
-  const lure2 = this.add.sprite(this.cameras.main.centerX + 120, this.cameras.main.centerY + 150, 'lure');
+  const lure2 = this.add.sprite(this.cameras.main.centerX + 200, this.cameras.main.centerY + 150, 'lure');
   lure2.setScale(0.25);
 
   // Hide lures initially
@@ -308,7 +316,7 @@ function handlePlayerInput(player, action, scene) {
       playerRodTime = 0;
       const randomPlopSound = Phaser.Math.Between(0, plopSound.length - 1);
       plopSound[randomPlopSound].play();
-      if (waitingForMatchStart && (player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water')) {
+      if (waitingForMatchStart && ((player === 1 && player2State === 'rod-in-water') || (player === 2 && player1State === 'rod-in-water'))) {
         matchStarted = true;
         waitingForMatchStart = false;
         matchFinished = false;
@@ -438,6 +446,15 @@ function SetLureVisible(theLure, visible, scene){
   }
   
 }
+
+
+//function animateLure(theLure, hasFish) {
+//  if (hasFish) {
+//    theLure.play('lure-animate');
+//  } else {
+//    theLure.stop();
+//  }
+//}
 
 function updatePlayerState(player, scene) {
 
@@ -579,6 +596,18 @@ function updatePlayerState(player, scene) {
     player2Cooldown = playerCooldown;
     player2ShowLootTime = playerShowLootTime;
     player2FishCount = playerFishCount;
+  }
+
+  // Animate lure if visible and there is a catch
+  if (playerLure.visible) {
+    if(checkFishCatch(playerRodTime)){
+      //set lure texture to random
+      const randomFrame = Phaser.Math.Between(0, 3);
+      playerLure.setFrame(randomFrame);
+    }else{
+      playerLure.setFrame(0);
+    }
+    //animateLure(playerLure, checkFishCatch(playerRodTime));
   }
 }
 

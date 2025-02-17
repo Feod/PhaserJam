@@ -69,6 +69,8 @@ let fishEmitter;
 let player1HoldingButton = false;
 let player2HoldingButton = false;
 
+let boatTween; // Variable to store the boat's tween animation
+
 function preload() {
   this.load.image('background', 'assets/background.png');
 
@@ -249,9 +251,17 @@ function create() {
   }
   ambienceSound.play({ loop: true });
 
- 
+  // Initialize boat tween animation
+  boatTween = this.tweens.add({
+    targets: boat,
+    x: { from: this.cameras.main.centerX - 50, to: this.cameras.main.centerX + 50 },
+    duration: 2000,
+    ease: 'Sine.easeInOut',
+    yoyo: true,
+    repeat: -1,
+    paused: true // Start paused
+  });
 
-  
 }
 
 function update() {
@@ -643,6 +653,8 @@ function updatePlayerState(player, scene) {
 
         createParticleExplosion(playerSprite.x, playerSprite.y, scene);
 
+        // Move the boat when a fish is caught
+        moveBoat();
 
       } else {
 
@@ -916,6 +928,9 @@ const endMatch = function () {
 
   // Hide large timer text
   largeTimerText.setVisible(false);
+
+  // Stop the boat's tween animation when the match ends
+  boatTween.stop();
 }
 
 function startMatchAnimation() {
@@ -968,5 +983,11 @@ function createParticleExplosion(x, y, scene) {
       ease: 'Power2',
       onComplete: () => fish.destroy(), // Clean up
     });
+  }
+}
+
+function moveBoat() {
+  if (!boatTween.isPlaying()) {
+    boatTween.play();
   }
 }
